@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs'
+import { resolve } from 'node:path'
 import { User } from '../@types/in-memory/database'
 
-const EXAMPLE_PATH = './src/in-memory/users-example.json'
+const EXAMPLE_PATH = resolve('./src/in-memory/users-example.json')
 export const users: User[] = []
 
 export const database = {
