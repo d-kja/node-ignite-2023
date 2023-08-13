@@ -1,0 +1,12 @@
+[
+  {
+    "id": "566c12f0-6b5f-40c9-bd4f-b70d99b8c92b",
+    "name": "john doe",
+    "email": "johndoe@example.com"
+  },
+  {
+    "id": "ec469562-e8c7-44ff-9779-415e18d44224",
+    "name": "doe john",
+    "email": "doejohn@example.com"
+  }
+]

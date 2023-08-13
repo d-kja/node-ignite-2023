@@ -1,33 +1,28 @@
 import { exec } from 'node:child_process'
 import http from 'node:http'
+import { database } from './in-memory/database'
+import { userModule } from './models/user.model'
 
 const OS_ENV = process.platform === 'win32' ? 'start' : 'xdg-open'
 
 const PORT = 4000
 const API_URL = `http://localhost:${PORT}`
 
+database.load()
+
 const server = http.createServer((request, response) => {
+  const { method, url } = request
   const status = (code: number) => (request.statusCode = code)
-  const method = request.method
 
-  switch (method) {
-    case 'GET':
-      status(200)
-      response.end('Hello world')
+  console.log(`[${method}] - ${url}`)
 
-      break
-    case 'POST':
-      status(201)
-      response.end('POST RESPONSE')
-
-      break
-
-    default:
-      status(405)
-      response.end()
-
-      break
+  // User handler
+  if (url?.match(/^\/users(\/\S+)?$/gi)) {
+    return userModule(request, response)
   }
+
+  status(405)
+  response.end('Not allowed')
 })
 
 if (false) exec(`${OS_ENV} ${API_URL}`) // lazy ass mf
