@@ -34,7 +34,13 @@ const server = createServer(async (request, response) => {
     const streamChain = request.pipe(new FormatStream())
 
     for await (const chunk of streamChain) {
+      const pong = performance.now()
       const value = chunk.toString()
+
+      console.log(
+        value.split('-')[0].trim(),
+        `~ took ${(pong - ping).toFixed(2)}ms`,
+      )
       writer.write(value)
     }
 
