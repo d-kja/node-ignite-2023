@@ -1,20 +1,15 @@
 import { createWriteStream } from 'node:fs'
 import { createServer } from 'node:http'
-import { resolve } from 'node:path'
+import path from 'node:path'
 import { performance } from 'node:perf_hooks'
-import { Readable, Transform } from 'node:stream'
-import { TransformCallback } from 'stream'
+import { Transform } from 'node:stream'
 
 class FormatStream extends Transform {
-  _transform(
-    chunk: Readable,
-    _: BufferEncoding,
-    callback: TransformCallback,
-  ): void {
+  _transform(chunk, _, callback) {
     const value = chunk.toString()
 
     // Handle & format the value here...
-    const formattedValue = value.toUpperCase()
+    const formattedValue = value.concat(',')
 
     // Push the value
     callback(null, formattedValue)
@@ -26,36 +21,35 @@ const server = createServer(async (request, response) => {
 
   if (url === '/file' && method === 'POST') {
     const ping = performance.now()
-
     console.info('[INFO] - Started reading stream')
-    const writer = createWriteStream(
-      resolve(__dirname, '/src/files/example.txt'),
-      {
-        flags: 'w',
-      },
-    )
-    const streamChain = request.pipe(new FormatStream())
 
-    for await (const chunk of streamChain) {
-      const pong = performance.now()
-      const value = chunk.toString()
-
-      console.log(
-        value.split('-')[0].trim(),
-        `~ took ${(pong - ping).toFixed(2)}ms`,
-      )
-      writer.write(value)
-    }
-
-    streamChain.pipe(response).on('finish', () => {
+    const streamChain = request.pipe(new FormatStream()).on('finish', () => {
       const pong = performance.now()
       console.info(
         '[INFO] - Finished reading stream',
         `~ took ${(pong - ping).toFixed(2)}ms`,
       )
-
-      writer.end()
     })
+
+    const buffers = []
+
+    for await (const chunk of streamChain) {
+      const pong = performance.now()
+
+      if (typeof chunk === 'string') {
+        buffers.push(Buffer.from(chunk))
+      } else buffers.push(chunk)
+
+      console.log(`~ took ${(pong - ping).toFixed(2)}ms`)
+    }
+
+    const bodyRequest = Buffer.concat(buffers).toString()
+
+    createWriteStream(path.resolve('./assets/example.txt'), {
+      flags: 'a',
+    }).write(bodyRequest.replace(',', ',\n'))
+
+    return response.end(bodyRequest)
   }
 
   return response.end('Method not allowed')
