@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process'
 import http from 'node:http'
-import { database } from './in-memory/database'
-import { userModule } from './models/user.model'
+import { database } from './in-memory/database.js'
+import { userModule } from './models/user.model.js'
 
 const OS_ENV = process.platform === 'win32' ? 'start' : 'xdg-open'
 

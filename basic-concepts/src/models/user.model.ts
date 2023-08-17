@@ -1,9 +1,10 @@
 import { randomUUID } from 'crypto'
 import { IncomingMessage, ServerResponse } from 'http'
-import { UserError } from '../errors/user'
-import { database } from '../in-memory/database'
+import { UserError } from '../errors/user.js'
+import { database } from '../in-memory/database.js'
+import { bodyParser } from '../middleware/body-parser.js'
 
-export const userModule = <T extends IncomingMessage>(
+export const userModule = async <T extends IncomingMessage>(
   request: IncomingMessage,
   response: ServerResponse<T> & {
     req: IncomingMessage
@@ -13,9 +14,8 @@ export const userModule = <T extends IncomingMessage>(
 
   const json = (data: {}) => JSON.stringify(data)
   const status = (code: number) => (response.statusCode = code)
-  const header = (header: string, value: string) =>
-    response.setHeader(header, value)
 
+  const { body } = await bodyParser(request, response)
   const params =
     url?.split('/').filter((item) => item.length && item !== 'users') ?? []
 
@@ -31,15 +31,14 @@ export const userModule = <T extends IncomingMessage>(
         }
 
         status(200)
-        header('Content-Type', 'application/json')
         return response.end(json(data))
 
       case 'POST':
         status(201)
         database.post({
           id: randomUUID(),
-          name: 'example',
-          email: 'example@example.com',
+          name: body?.name,
+          email: body?.email,
         })
 
         return response.end()

@@ -1,8 +1,8 @@
 import assert from 'node:assert'
 import { randomUUID } from 'node:crypto'
 import { beforeEach, describe, it } from 'node:test'
-import { User } from '../../@types/in-memory/database'
-import { database } from '../../in-memory/database'
+import { User } from '../../@types/in-memory/database.js'
+import { database } from '../../in-memory/database.js'
 
 const deepClone = (item: {}) => JSON.parse(JSON.stringify(item))
 let usersClone: User[] = []
