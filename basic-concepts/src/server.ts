@@ -1,24 +1,25 @@
 import { exec } from 'node:child_process'
 import http from 'node:http'
-import { database } from './in-memory/database.js'
-import { userModule } from './models/user.model.js'
+import { Database } from './in-memory/database.js'
+import { routes } from './routes.js'
 
 const OS_ENV = process.platform === 'win32' ? 'start' : 'xdg-open'
 
 const PORT = 4000
 const API_URL = `http://localhost:${PORT}`
 
-database.load()
+export const database = new Database()
 
-const server = http.createServer((request, response) => {
+const server = http.createServer(async (request, response) => {
   const { method, url } = request
   const status = (code: number) => (request.statusCode = code)
 
   console.log(`[${method}] - ${url}`)
 
-  // User handler
-  if (url?.match(/^\/users(\/\S+)?$/gi)) {
-    return userModule(request, response)
+  const route = routes.find((route) => url?.match(route.pathRegex))
+
+  if (route) {
+    await route.handler(request, response)
   }
 
   status(405)

@@ -1,25 +1,23 @@
 import assert from 'node:assert'
-import { randomUUID } from 'node:crypto'
-import { beforeEach, describe, it } from 'node:test'
-import { User } from '../../@types/in-memory/database.js'
-import { database } from '../../in-memory/database.js'
+import { describe, it } from 'node:test'
+import { Table } from '../../@types/in-memory/database.js'
+import { Database } from '../../in-memory/database.js'
 
-const deepClone = (item: {}) => JSON.parse(JSON.stringify(item))
-let usersClone: User[] = []
+const database = new Database(false)
 
 describe('@in-memory-database', () => {
-  beforeEach(() => {
-    usersClone = [...deepClone(database.get())]
-  })
-
   it('should be able to insert new users', () => {
-    const user: User = {
-      id: randomUUID(),
-      name: 'johndoe',
-      email: 'johndoe@example.com',
+    const user = {
+      name: 'john',
+      email: 'johndoe@test.com',
     }
 
-    usersClone.push(user)
-    assert.strictEqual(usersClone.length, 1)
+    database.insert('users', user)
+    const users = database.select('users') as Table
+
+    assert.strictEqual(users.length, 1)
+
+    const updatedUser = users[0]
+    assert('id' in updatedUser)
   })
 })

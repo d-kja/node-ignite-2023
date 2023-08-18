@@ -1,34 +1,53 @@
-import { readFile } from 'node:fs'
-import { resolve } from 'node:path'
-import { User } from '../@types/in-memory/database.js'
+import { randomUUID } from 'node:crypto'
+import { readFile, writeFile } from 'node:fs/promises'
+import { DatabaseType } from '../@types/in-memory/database.js'
 
-const EXAMPLE_PATH = resolve('./src/in-memory/users-example.json')
-export const users: User[] = []
+const DB_PATH = new URL('../../db.json', import.meta.url)
 
-export const database = {
-  async load() {
-    readFile(EXAMPLE_PATH, (err, data) => {
-      if (err) console.log(err)
+export class Database {
+  #database = {} as DatabaseType
+  #persistData = true
 
-      const exampleUsers: User[] = JSON.parse(data.toString())
+  constructor(persist: boolean = true) {
+    this.#persistData = persist
 
-      Promise.all(
-        exampleUsers.map(
-          (user) =>
-            new Promise((resolve) => {
-              this.post(user)
-              return resolve
-            }),
-        ),
-      )
-    })
-  },
-  get(id?: string | undefined) {
-    if (id) return users.filter((user) => user.id === id)[0]
+    readFile(DB_PATH, 'utf8')
+      .then((data) => {
+        const fileContent: DatabaseType = JSON.parse(data.toString())
 
-    return users
-  },
-  post(user: User) {
-    users.push(user)
-  },
+        this.#database = fileContent
+      })
+      .catch(() => {
+        this.#persist()
+      })
+  }
+  #persist() {
+    if (!this.#persistData) return
+
+    writeFile(DB_PATH, JSON.stringify(this.#database)).catch((err) =>
+      console.error(err),
+    )
+  }
+
+  select(table: string, id?: string) {
+    const dbTable = this.#database[table]
+
+    if (!dbTable) return []
+
+    if (id) return dbTable.filter((row) => row.id === id)[0]
+
+    return this.#database[table]
+  }
+  insert(table: string, data: any) {
+    const dbTable = this.#database[table]
+    const id = randomUUID()
+
+    if (dbTable) {
+      dbTable.push({ id, ...data })
+    } else {
+      this.#database[table] = [{ id, ...data }]
+    }
+
+    this.#persist()
+  }
 }

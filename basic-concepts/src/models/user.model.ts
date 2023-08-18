@@ -1,8 +1,7 @@
-import { randomUUID } from 'crypto'
 import { IncomingMessage, ServerResponse } from 'http'
 import { UserError } from '../errors/user.js'
-import { database } from '../in-memory/database.js'
 import { bodyParser } from '../middleware/body-parser.js'
+import { database } from '../server.js'
 
 export const userModule = async <T extends IncomingMessage>(
   request: IncomingMessage,
@@ -24,7 +23,7 @@ export const userModule = async <T extends IncomingMessage>(
   try {
     switch (method) {
       case 'GET':
-        const data = database.get(userId) // users | user
+        const data = database.select('users', userId) // users | user
 
         if (!data) {
           throw new UserError('User not found')
@@ -35,8 +34,7 @@ export const userModule = async <T extends IncomingMessage>(
 
       case 'POST':
         status(201)
-        database.post({
-          id: randomUUID(),
+        database.insert('users', {
           name: body?.name,
           email: body?.email,
         })
