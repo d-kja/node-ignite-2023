@@ -1,5 +1,6 @@
 import { exec } from 'node:child_process'
 import http from 'node:http'
+import { RequestType } from './@types/server.js'
 import { Database } from './in-memory/database.js'
 import { routes } from './routes.js'
 
@@ -10,7 +11,7 @@ const API_URL = `http://localhost:${PORT}`
 
 export const database = new Database()
 
-const server = http.createServer(async (request, response) => {
+const server = http.createServer(async (request: RequestType, response) => {
   const { method, url = '/' } = request
   const status = (code: number) => (request.statusCode = code)
 
@@ -19,6 +20,9 @@ const server = http.createServer(async (request, response) => {
   const route = routes.find((route) => route.pathRegex.test(url))
 
   if (route) {
+    const routeParams = url.match(route.pathRegex)
+    request.params = { ...routeParams?.groups }
+
     await route.handler({ request, response })
   }
 

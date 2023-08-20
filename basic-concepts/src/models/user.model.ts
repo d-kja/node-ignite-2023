@@ -1,20 +1,19 @@
-import { IncomingMessage, ServerResponse } from 'http'
+import { IncomingMessage } from 'http'
+import { HandlerParams } from '../@types/server.js'
 import { UserError } from '../errors/user.js'
 import { bodyParser } from '../middleware/body-parser.js'
 import { database } from '../server.js'
 
-export const userModule = async <T extends IncomingMessage>(
-  request: IncomingMessage,
-  response: ServerResponse<T> & {
-    req: IncomingMessage
-  },
-) => {
+export const userModule = async <T extends IncomingMessage>({
+  request,
+  response,
+}: HandlerParams<T>) => {
   const { method, url } = request
 
   const json = (data: {}) => JSON.stringify(data)
   const status = (code: number) => (response.statusCode = code)
 
-  const { body } = await bodyParser(request, response)
+  const { body } = await bodyParser({ request, response })
   const params =
     url?.split('/').filter((item) => item.length && item !== 'users') ?? []
 
@@ -40,6 +39,15 @@ export const userModule = async <T extends IncomingMessage>(
         })
 
         return response.end()
+
+      case 'DELETE':
+        if (!request.params || !request.params?.id)
+          throw new UserError('Invalid ID')
+
+        status(201)
+        database.delete('users', request.params.id)
+
+        return response.writeHead(204).end()
 
       default:
         status(405)

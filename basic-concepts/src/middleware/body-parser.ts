@@ -1,12 +1,10 @@
-import { IncomingMessage, ServerResponse } from 'http'
-import { BodyParserParams } from '../@types/utils/body-parser.js'
+import { IncomingMessage } from 'http'
+import { HandlerParams } from '../@types/server.js'
 
-export const bodyParser = async <T extends IncomingMessage>(
-  request: BodyParserParams,
-  response: ServerResponse<T> & {
-    req: IncomingMessage
-  },
-) => {
+export const bodyParser = async <T extends IncomingMessage>({
+  request,
+  response,
+}: HandlerParams<T>) => {
   const header = (header: string, value: string) =>
     response.setHeader(header, value)
 
