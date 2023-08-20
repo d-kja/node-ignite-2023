@@ -13,11 +13,11 @@ export const buildRoutePath = (path: string) => {
   // Replace the preset ':id' with valid regex to find available groups
   const pathWithParameters = path.replaceAll(
     parametersRegex,
-    '(?<$1>[a-zA-Z0-9-_]+)',
+    // prettier-ignore
+    '(?<$1>[a-zA-Z0-9\-_]+)',
   )
 
   // transform string '/users/([a-zA-Z0-9\-_]+)' into an actual regex
-  const pathRegex = new RegExp(`^${pathWithParameters}`)
-
+  const pathRegex = new RegExp(`^${pathWithParameters}(?<query>\\?(.*))?$`)
   return pathRegex
 }

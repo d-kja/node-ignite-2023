@@ -3,6 +3,7 @@ import http from 'node:http'
 import { RequestType } from './@types/server.js'
 import { Database } from './in-memory/database.js'
 import { routes } from './routes.js'
+import { extractQueryParams } from './utils/extract-query-params.js'
 
 const OS_ENV = process.platform === 'win32' ? 'start' : 'xdg-open'
 
@@ -21,13 +22,17 @@ const server = http.createServer(async (request: RequestType, response) => {
 
   if (route) {
     const routeParams = url.match(route.pathRegex)
-    request.params = { ...routeParams?.groups }
+
+    const { query, ...params } = routeParams?.groups ?? {}
+    request.params = params
+    request.query = query ? extractQueryParams(query) : {}
+    console.log(request.params, request.query)
 
     await route.handler({ request, response })
+  } else {
+    status(405)
+    return response.end('Not allowed')
   }
-
-  status(405)
-  response.end('Not allowed')
 })
 
 if (false) exec(`${OS_ENV} ${API_URL}`) // lazy ass mf

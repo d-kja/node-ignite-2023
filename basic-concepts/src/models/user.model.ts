@@ -22,7 +22,9 @@ export const userModule = async <T extends IncomingMessage>({
   try {
     switch (method) {
       case 'GET':
-        const data = database.select('users', userId) // users | user
+        const { search } = request.query ?? {}
+
+        const data = database.select('users', userId, search) // users | user
 
         if (!data) {
           throw new UserError('User not found')
@@ -40,14 +42,26 @@ export const userModule = async <T extends IncomingMessage>({
 
         return response.end()
 
+      case 'PUT':
+        if (!request.params || !request.params?.id)
+          throw new UserError('Invalid ID')
+
+        status(204)
+        database.update('users', request.params.id, {
+          name: body?.name,
+          email: body?.email,
+        })
+
+        return response.end()
+
       case 'DELETE':
         if (!request.params || !request.params?.id)
           throw new UserError('Invalid ID')
 
-        status(201)
+        status(204)
         database.delete('users', request.params.id)
 
-        return response.writeHead(204).end()
+        return response.end()
 
       default:
         status(405)

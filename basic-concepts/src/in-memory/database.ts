@@ -29,10 +29,16 @@ export class Database {
     )
   }
 
-  select(table: string, id?: string) {
-    const dbTable = this.#database[table]
+  select(table: string, id?: string, query?: string) {
+    const dbTable = this.#database[table] as Array<{ id: string; name: string }>
 
     if (!dbTable) return []
+
+    if (query)
+      return dbTable.filter(
+        (row) =>
+          row?.name && row.name.toLowerCase().includes(query.toLowerCase()),
+      )
 
     if (id) return dbTable.filter((row) => row.id === id)[0]
 
@@ -55,6 +61,14 @@ export class Database {
 
     if (rowIndex > -1) {
       this.#database[table].splice(rowIndex, 1)
+      this.#persist()
+    }
+  }
+  update(table: string, id: string, data: any) {
+    const rowIndex = this.#database[table].findIndex((row) => row.id === id)
+
+    if (rowIndex > -1) {
+      this.#database[table][rowIndex] = { id, ...data }
       this.#persist()
     }
   }

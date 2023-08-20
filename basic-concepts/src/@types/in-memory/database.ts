@@ -5,5 +5,5 @@ export const tableSchema = z.array(
     id: z.string().uuid(),
   }),
 )
-export type Table = Record<string, any> & z.infer<typeof tableSchema>
-export type DatabaseType = Record<string, Table>
+export type Table<T> = z.infer<typeof tableSchema>
+export type DatabaseType<T = Record<string, any>> = Record<string, Table<T>>
