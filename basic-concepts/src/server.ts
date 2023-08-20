@@ -11,15 +11,15 @@ const API_URL = `http://localhost:${PORT}`
 export const database = new Database()
 
 const server = http.createServer(async (request, response) => {
-  const { method, url } = request
+  const { method, url = '/' } = request
   const status = (code: number) => (request.statusCode = code)
 
   console.log(`[${method}] - ${url}`)
 
-  const route = routes.find((route) => url?.match(route.pathRegex))
+  const route = routes.find((route) => route.pathRegex.test(url))
 
   if (route) {
-    await route.handler(request, response)
+    await route.handler({ request, response })
   }
 
   status(405)
