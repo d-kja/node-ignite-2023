@@ -1,0 +1,16 @@
+{
+  "name": "@d-kja/challenge-01",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "dev:test": ""
+  },
+  "author": "d-kja",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.5.1",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  }
+}
