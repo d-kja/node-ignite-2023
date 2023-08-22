@@ -33,7 +33,7 @@ export class Database {
 
     this.#persist()
   }
-  read(table: string, id?: string, query?: { value: string; field: string }) {
+  read(table: string, id?: string, query?: { value: string; field: string[] }) {
     const databaseTable = this.#database[table]
 
     if (!databaseTable) return []
@@ -41,8 +41,10 @@ export class Database {
     if (id) return this.#database[table].find((row) => row.id === id)
 
     if (query?.value)
-      return this.#database[table].filter((row) =>
-        row[query.field]?.includes(query.value),
+      return this.#database[table].filter(
+        (row) =>
+          row[query.field[0]]?.includes(query.value) ||
+          row[query.field[1]]?.includes(query.value),
       )
 
     return databaseTable

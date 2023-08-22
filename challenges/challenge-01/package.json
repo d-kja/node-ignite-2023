@@ -4,13 +4,17 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "dev:test": ""
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "author": "d-kja",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.5.1",
+    "axios": "^1.4.0",
+    "csv-parse": "^5.4.0",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.2"
   }
 }

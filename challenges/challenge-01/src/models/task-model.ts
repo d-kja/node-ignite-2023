@@ -13,10 +13,9 @@ export function taskModel({ request, response }: MiddlewareHandler) {
         status({ code: 200, response })
 
         let searchQuery = undefined
-        console.log({ query })
         if (query)
           searchQuery = {
-            field: 'title',
+            field: ['title', 'description'],
             value: query.search,
           }
 
@@ -45,7 +44,14 @@ export function taskModel({ request, response }: MiddlewareHandler) {
       case 'PATCH': {
         status({ code: 204, response })
 
-        const data = { ...body, completed_at: new Date() }
+        const row = database.read(DATABASE_TABLE, params?.id)
+        const data = { ...body }
+
+        if (row) {
+          database.update(DATABASE_TABLE, params?.id, data, true)
+        }
+
+        data['completed_at'] = new Date()
 
         if (body) database.update(DATABASE_TABLE, params?.id, data)
         return response.end()
