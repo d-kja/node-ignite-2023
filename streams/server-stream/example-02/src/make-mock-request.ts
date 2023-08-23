@@ -1,13 +1,12 @@
 import { Readable } from 'node:stream'
 
-const myReadableExample = new Readable({
-  read() {},
-})
+const myReadableExample = new Readable()
 
 fetch('http://localhost:3333/file', {
   method: 'POST',
-  // @ts-ignore
   body: myReadableExample,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   duplex: 'half',
 })
 

@@ -33,6 +33,7 @@ export class Database {
 
     this.#persist()
   }
+
   read(table: string, id?: string, query?: { value: string; field: string[] }) {
     const databaseTable = this.#database[table]
 
@@ -49,21 +50,28 @@ export class Database {
 
     return databaseTable
   }
-  update(table: string, id: string, data: any, replace: boolean = false) {
+
+  update(
+    table: string,
+    id: string,
+    data: Record<string, string>,
+    replace = false,
+  ) {
     const databaseTable = this.#database[table]
     const rowIndex = databaseTable.findIndex((item) => item.id === id)
 
     if (rowIndex) {
-      const created_at = databaseTable[rowIndex].created_at
+      const createdAt = databaseTable[rowIndex].created_at
 
       const updatedData = replace
-        ? { id, ...data, created_at }
+        ? { id, ...data, created_at: createdAt }
         : { ...databaseTable[rowIndex], ...data }
 
       databaseTable[rowIndex] = updatedData
       this.#persist()
     }
   }
+
   delete(table: string, id: string) {
     const databaseTable = this.#database[table]
     const rowIndex = databaseTable.findIndex((item) => item.id === id)
@@ -77,7 +85,7 @@ export class Database {
 
   #persist() {
     writeFile(DB_PATH, JSON.stringify(this.#database)).catch((err) =>
-      console.log('[ERROR/DATABASE] -', err),
+      console.info('[ERROR/DATABASE] -', err),
     )
   }
 }

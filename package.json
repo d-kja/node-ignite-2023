@@ -1,0 +1,17 @@
+{
+  "name": "@d-kja/ignite-node",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint **/*.ts --fix --ignore-pattern \"/**/node_modules/*\"",
+    "test": "echo Missing test command",
+    "commit": "npm run lint && npm run test"
+  },
+  "author": "d-kja",
+  "license": "MIT",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "eslint": "^8.47.0",
+    "husky": "^8.0.0"
+  }
+}

@@ -10,18 +10,19 @@ export const userModule = async <T extends IncomingMessage>({
 }: HandlerParams<T>) => {
   const { method, url } = request
 
-  const json = (data: {}) => JSON.stringify(data)
+  const json = (data: any) => JSON.stringify(data)
   const status = (code: number) => (response.statusCode = code)
 
   const { body } = await bodyParser({ request, response })
   const params =
-    url?.split('/').filter((item) => item.length && item !== 'users') ?? []
+    url?.split('/').filter((item: string) => item.length && item !== 'users') ??
+    []
 
   const userId = params[0]
 
   try {
     switch (method) {
-      case 'GET':
+      case 'GET': {
         const { search } = request.query ?? {}
 
         const data = database.select('users', userId, search) // users | user
@@ -32,6 +33,7 @@ export const userModule = async <T extends IncomingMessage>({
 
         status(200)
         return response.end(json(data))
+      }
 
       case 'POST':
         status(201)

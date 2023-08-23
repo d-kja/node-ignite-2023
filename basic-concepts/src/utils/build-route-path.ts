@@ -14,7 +14,7 @@ export const buildRoutePath = (path: string) => {
   const pathWithParameters = path.replaceAll(
     parametersRegex,
     // prettier-ignore
-    '(?<$1>[a-zA-Z0-9\-_]+)',
+    '(?<$1>[a-zA-Z0-9-_]+)',
   )
 
   // transform string '/users/([a-zA-Z0-9\-_]+)' into an actual regex

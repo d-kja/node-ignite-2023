@@ -39,11 +39,12 @@ describe('[API/Routes] Task route (GET)', async () => {
     Promise.all(
       tasks.map(
         (task) =>
-          new Promise(async (resolve, reject) => {
+          new Promise((resolve, reject) => {
             try {
-              const response = await api.post('/tasks', task)
+              api.post('/tasks', task).then((data) => {
+                expect(data.status).toBe(201)
+              })
 
-              expect(response.status).toBe(201)
               return resolve
             } catch (error) {
               return reject
@@ -76,12 +77,12 @@ describe('[API/Routes] Task route (GET)', async () => {
     Promise.all(
       filteredData.map(
         (task) =>
-          new Promise(async (resolve, reject) => {
+          new Promise((resolve, reject) => {
             try {
-              const response = await api.post('/tasks', task)
-
-              expect(response.status).toBe(201)
-              return resolve
+              api.post('/tasks', task).then((data) => {
+                expect(data.status).toBe(201)
+                return resolve
+              })
             } catch (error) {
               return reject
             }

@@ -12,7 +12,7 @@ export function taskModel({ request, response }: MiddlewareHandler) {
       case 'GET': {
         status({ code: 200, response })
 
-        let searchQuery = undefined
+        let searchQuery
         if (query)
           searchQuery = {
             field: ['title', 'description'],
@@ -51,7 +51,7 @@ export function taskModel({ request, response }: MiddlewareHandler) {
           database.update(DATABASE_TABLE, params?.id, data, true)
         }
 
-        data['completed_at'] = new Date()
+        data.completed_at = new Date()
 
         if (body) database.update(DATABASE_TABLE, params?.id, data)
         return response.end()

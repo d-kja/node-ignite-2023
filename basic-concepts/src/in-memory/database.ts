@@ -8,7 +8,7 @@ export class Database {
   #database = {} as DatabaseType
   #persistData = true
 
-  constructor(persist: boolean = true) {
+  constructor(persist = true) {
     this.#persistData = persist
 
     readFile(DB_PATH, 'utf8')
@@ -21,6 +21,7 @@ export class Database {
         this.#persist()
       })
   }
+
   #persist() {
     if (!this.#persistData) return
 
@@ -44,6 +45,7 @@ export class Database {
 
     return this.#database[table]
   }
+
   insert(table: string, data: any) {
     const dbTable = this.#database[table]
     const id = randomUUID()
@@ -56,6 +58,7 @@ export class Database {
 
     this.#persist()
   }
+
   delete(table: string, id: string) {
     const rowIndex = this.#database[table].findIndex((row) => row.id === id)
 
@@ -64,6 +67,7 @@ export class Database {
       this.#persist()
     }
   }
+
   update(table: string, id: string, data: any) {
     const rowIndex = this.#database[table].findIndex((row) => row.id === id)
 
