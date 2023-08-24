@@ -4,7 +4,8 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/**/*.ts",
+    "knex": "node --no-warnings --loader tsx ./node_modules/knex/bin/cli.js --",
     "lint": "eslint src --ext .ts --fix",
     "lint:old": "eslint src/**/*.ts --fix"
   },
@@ -19,7 +20,10 @@
     "vitest": "^0.34.2"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "fastify": "^4.21.0",
+    "knex": "^2.5.1",
+    "pg": "^8.11.3",
     "zod": "^3.22.2"
   }
 }

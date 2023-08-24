@@ -2,10 +2,8 @@ import fastify from 'fastify'
 
 const app = fastify()
 
-app.get('/', (req, res) => {
-  return res.send({
-    example: 'a',
-  })
+app.get('/', async (req, res) => {
+  return res.send()
 })
 
 app
