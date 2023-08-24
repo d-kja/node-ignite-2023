@@ -4,7 +4,7 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/**/*.ts",
+    "dev": "tsx watch src/server.ts",
     "knex": "node --no-warnings --loader tsx ./node_modules/knex/bin/cli.js --",
     "lint": "eslint src --ext .ts --fix",
     "lint:old": "eslint src/**/*.ts --fix"
