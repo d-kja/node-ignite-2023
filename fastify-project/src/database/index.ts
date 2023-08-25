@@ -1,11 +1,10 @@
-import dotenv from 'dotenv'
 import knexSetup, { Knex } from 'knex'
 
-dotenv.config()
+import { env } from '@/env.js'
 
 export const config: Knex.Config = {
   client: 'pg',
-  connection: process.env.DATABASE_URL,
+  connection: env.DATABASE_URL,
   searchPath: ['knex', 'public'],
 
   migrations: {
@@ -14,4 +13,36 @@ export const config: Knex.Config = {
   },
 }
 
+/**
+ * @Info
+ *
+ * Knex database connection, use this to manipulate the data in your database
+ *
+ * ---
+ *
+ * @Examples
+ *
+ * 01. Listing data
+ *
+ * ```ts
+ * const transactions = await db('transactions')
+ *   .select('*')
+ *   .where('amount', 2000)
+ * ```
+ *
+ * ---
+ *
+ * 02. Creating data row
+ * ```ts
+ * const transactions = await db('transactions')
+ *   .insert({
+ *     id: randomUUID(),
+ *     title: 'Transaction test',
+ *     amount: 2000,
+ *   })
+ *   .returning('*') // Sql doesn't return the values after inserting by default
+ * ```
+ */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export const db = knexSetup(config)

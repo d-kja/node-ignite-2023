@@ -1,30 +1,15 @@
 import fastify from 'fastify'
+import { env } from './env.js'
 
-import { db } from './database'
+import { transactionsRoute } from './routes/transactions.js'
 
 const app = fastify()
 
-app.get('/', async (req, res) => {
-  // Creating data row
-  // const transaction = await db('transactions')
-  //   .insert({
-  //     id: randomUUID(),
-  //     title: 'Transaction test',
-  //     amount: 2000,
-  //   })
-  //   .returning('*')
-
-  // Listing data
-  const transactions = await db('transactions')
-    .select('*')
-    .where('amount', 2000)
-
-  return res.send(transactions)
-})
+app.register(transactionsRoute)
 
 app
   .listen({
-    port: 4000,
+    port: env.PORT,
   })
   .then(() =>
     console.log(
