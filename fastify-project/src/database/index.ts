@@ -1,4 +1,4 @@
-import knexSetup, { Knex } from 'knex'
+import knex, { Knex } from 'knex'
 
 import { env } from '@/env.js'
 
@@ -43,6 +43,4 @@ export const config: Knex.Config = {
  *   .returning('*') // Sql doesn't return the values after inserting by default
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const db = knexSetup(config)
+export const db = knex(config)
