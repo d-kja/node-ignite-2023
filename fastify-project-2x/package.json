@@ -1,0 +1,27 @@
+{
+  "name": "@d-kja/fastify-project",
+  "main": "src/server.ts",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest",
+    "dev": "tsx watch src/index.ts",
+    "lint": "eslint src --ext .ts --fix",
+    "knex": "node --no-warnings --loader tsx node_modules/knex/bin/cli.js"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@types/node": "^20.5.7",
+    "eslint": "^8.48.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.3"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^9.0.4",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.22.0",
+    "knex": "^2.5.1",
+    "pg": "^8.11.3",
+    "zod": "^3.22.2"
+  }
+}
