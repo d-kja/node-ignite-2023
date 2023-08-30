@@ -26,6 +26,6 @@ app
   })
   .then(() =>
     console.log(
-      `[SERVER] - Running on port 4000\n\n  - Development url: http://localhost:4000/`,
+      `[SERVER] - Running on port ${env.PORT}\n\n  - Development url: http://localhost:${env.PORT}/`,
     ),
   )
