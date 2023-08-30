@@ -11,7 +11,7 @@ const app = fastify()
 app.register(cookies)
 
 // Global hooks
-app.addHook('preHandler', (request, reply) => {
+app.addHook('preHandler', async (request, reply) => {
   // Do something here to affect your application globally...
 })
 
