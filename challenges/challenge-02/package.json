@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "test": "vitest",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint"
+  },
+  "author": "d-kja",
+  "license": "MIT",
+  "dependencies": {
+    "turbo": "^1.10.13"
+  }
+}
