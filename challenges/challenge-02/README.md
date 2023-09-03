@@ -10,7 +10,27 @@
 
 ## NFR (STACK)
 
--
+The whole application is using Typescript for type safety
+
+- Monorepo: Turbo
+
+- Server: fastify
+
+  - Loader: Tsx
+  - Query builder: Knex
+  - Database: PostgreSQL
+  - Static build: Tsup
+
+- Web application: Next.js
+
+  - Context management: Zustand, React query
+  - Styling: Tailwind CSS, PostCSS
+  - Forms: Hook form, Zod resolver
+
+- Validation: Zod
+- Linting: Eslint, prettier
+  - Rules: Rocketseat preset
+- Testing: Vitest, supertest
 
 ## BR
 
