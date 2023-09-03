@@ -1,6 +1,6 @@
 # Daily Diet (API)
 
-## FR (REQUIREMENTS)
+## Functional requirements
 
 - [ ] It should be able to create a user
 - [ ] It should be able to edit a _Meal_, allowing the user to change the whole content
@@ -8,7 +8,7 @@
 - [ ] It should be able to list a single _Meal_
 - [ ] It should be able to list every _Meal_ of a specific user
 
-## NFR (STACK)
+## Non functional requirements (STACK)
 
 The whole application is using Typescript for type safety
 
@@ -32,7 +32,7 @@ The whole application is using Typescript for type safety
   - Rules: Rocketseat preset
 - Testing: Vitest, supertest
 
-## BR
+## Business rules
 
 - [ ] It should be able to create a new _Meal_ with the following data:
 
