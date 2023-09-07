@@ -10,6 +10,8 @@ if (process.env.NODE_ENV === 'test') {
 const envSchema = z.object({
   DATABASE_URL: z.string(),
   DATABASE_CLIENT: z.enum(['pg']).default('pg'),
+  JWT_REFRESH_TOKEN_SECRET: z.string(),
+  JWT_TOKEN_SECRET: z.string(),
   NODE_ENV: z.enum(['production', 'test', 'development']).default('production'),
   PORT: z.coerce.number().default(3333),
 })
