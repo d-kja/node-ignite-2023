@@ -6,6 +6,8 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('session_id').index()
 
     table.text('name').notNullable()
+    table.text('email').notNullable().unique().index()
+    table.text('password').notNullable()
     table.text('profile_picture_url')
     table.text('bio')
 
@@ -14,5 +16,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable('users')
+  await knex.schema.dropTable('user')
 }

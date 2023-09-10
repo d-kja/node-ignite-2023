@@ -1,8 +1,8 @@
 import fastifyCookies from '@fastify/cookie'
 import { fastify } from 'fastify'
 
+import { authRoutes } from './routes/auth.route'
 import { mealRoutes } from './routes/meal.route'
-import { sessionRoutes } from './routes/session.route'
 import { userRoutes } from './routes/user.route'
 
 export const app = fastify()
@@ -17,6 +17,6 @@ app.register(userRoutes, {
 app.register(mealRoutes, {
   prefix: '/meal',
 })
-app.register(sessionRoutes, {
-  prefix: '/session',
+app.register(authRoutes, {
+  prefix: '/auth',
 })
