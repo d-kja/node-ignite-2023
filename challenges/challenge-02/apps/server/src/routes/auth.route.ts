@@ -36,7 +36,5 @@ export async function authRoutes(app: FastifyInstance) {
         error,
       })
     }
-
-    return {}
   })
 }

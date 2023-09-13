@@ -7,7 +7,7 @@ export const mealBodySchema = z
   .object({
     name: z.string().min(3),
     description: z.string().optional(),
-    is_part_of_diet: z.boolean().default(false),
+    is_part_of_diet: z.boolean().optional().default(false),
     time_stamp: z.string().datetime(),
   })
   .transform(({ name, description, time_stamp, is_part_of_diet }) => ({

@@ -12,6 +12,23 @@ import { authMiddleware } from '../middlewares/auth-middleware'
 export const mealRoutes = async (app: FastifyInstance) => {
   app.addHook('preHandler', authMiddleware)
 
+  app.get('/', async (request, reply) => {
+    const sessionId = request.cookies[cookiesPrefix.session]
+
+    if (!sessionId)
+      return reply.code(401).send({ error: 'Unauthorized, missing session' })
+
+    const userMeals = await db('meal')
+      .where({
+        session_id: sessionId,
+      })
+      .select()
+
+    return reply.send({
+      data: userMeals,
+    })
+  })
+
   app.get('/:id', async (request, reply) => {
     const { id } = mealByIdParamsSchema.parse(request.params)
     const sessionId = request.cookies[cookiesPrefix.session]
