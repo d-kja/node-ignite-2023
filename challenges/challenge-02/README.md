@@ -3,10 +3,10 @@
 ## Functional requirements
 
 - [x] It should be able to create a user
-- [ ] It should be able to edit a _Meal_, allowing the user to change the whole content
-- [ ] It should be able to delete a existing _Meal_
-- [ ] It should be able to list a single _Meal_
-- [ ] It should be able to list every _Meal_ of a specific user
+- [x] It should be able to edit a _Meal_, allowing the user to change the whole content
+- [x] It should be able to delete a existing _Meal_
+- [x] It should be able to list a single _Meal_
+- [x] It should be able to list every _Meal_ of a specific user
 
 ## Non functional requirements (STACK)
 
@@ -34,7 +34,7 @@ The whole application is using Typescript for type safety
 
 ## Business rules
 
-- [ ] It should be able to create a new _Meal_ with the following data:
+- [x] It should be able to create a new _Meal_ with the following data:
 
   ```json
   {
@@ -54,5 +54,5 @@ The whole application is using Typescript for type safety
   - Total of meals outside of his diet
   - Best sequence of meals in his diet
 
-- [ ] It should be able to identify the user between the requests
-- [ ] The user can only visualize, edit, or delete the _Meals_ created by him
+- [x] It should be able to identify the user between the requests
+- [x] The user can only visualize, edit, or delete the _Meals_ created by him
