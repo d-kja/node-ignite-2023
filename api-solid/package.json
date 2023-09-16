@@ -1,0 +1,25 @@
+{
+  "name": "@d-kja/gym-pass-api-solid",
+  "module": "src/server.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src --out-dir build"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.3.1",
+    "dotenv": "^16.3.1",
+    "fastify": "4.23.2",
+    "zod": "3.22.2"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "2.1.0",
+    "bun-types": "latest",
+    "prisma": "^5.3.1",
+    "tsup": "7.2.0",
+    "tsx": "3.12.10"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
