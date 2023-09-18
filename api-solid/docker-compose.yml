@@ -1,0 +1,21 @@
+# Commands to run this file
+#
+# CLI:
+#   docker compose
+#     - up: create/run services
+#     - stop: stop services
+#     - down: delete/remove services
+#
+# --------------------------------- //
+
+version: '3'
+
+services:
+  database-pg:
+    image: bitnami/postgresql
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=apisolid
+    ports:
+      - 5432:5432
