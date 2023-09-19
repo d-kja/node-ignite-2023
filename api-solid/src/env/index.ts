@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'test') {
 const envSchema = z.object({
   NODE_ENV: z.enum(['production', 'development', 'test']).default('production'),
   PORT: z.coerce.number().default(4000),
-  HOST: z.string().default('0.0.0.0'),
+  SERVER_HOST: z.string().default('0.0.0.0'),
 
   // DATABASE CONNECTION
   DATABASE_URL: z.string(),
