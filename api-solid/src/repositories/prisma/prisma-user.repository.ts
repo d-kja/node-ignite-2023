@@ -9,7 +9,7 @@ export class PrismaUserRepository implements UserRepository {
       data,
     })
 
-    return user
+    return { user }
   }
 
   async findByEmail(email: string) {
