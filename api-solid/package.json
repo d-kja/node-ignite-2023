@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsup src --out-dir build"
+    "build": "tsup src --out-dir build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@prisma/client": "5.3.1",
@@ -14,14 +16,12 @@
     "zod": "3.22.2"
   },
   "devDependencies": {
-    "@rocketseat/eslint-config": "2.1.0",
     "@types/bcryptjs": "^2.4.4",
     "bun-types": "latest",
+    "eslint": "^8.49.0",
     "prisma": "5.3.1",
     "tsup": "7.2.0",
-    "tsx": "3.12.10"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "tsx": "3.12.10",
+    "typescript": "^5.2.2"
   }
 }

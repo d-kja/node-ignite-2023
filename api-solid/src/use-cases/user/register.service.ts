@@ -23,10 +23,12 @@ export class RegisterUserUseCase {
     const saltRounds = 6
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
-    await this.userRepository.create({
+    const user = await this.userRepository.create({
       name,
       email,
       password_hash: passwordHash,
     })
+
+    return user
   }
 }
