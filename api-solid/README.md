@@ -6,7 +6,7 @@ It consists of a Gym Pass style application.
 
 The functionality of the application, what can the user do within our application.
 
-- [ ] Should be able to register a new user
+- [x] Should be able to register a new user
 - [ ] Should be able to authenticate an existing user
 - [ ] Should be able get the data of a specific user
 

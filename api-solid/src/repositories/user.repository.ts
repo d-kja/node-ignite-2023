@@ -1,7 +1,6 @@
-import { Prisma } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
 
-export abstract class UserRepository {
-  async create(data: Prisma.UserCreateInput): Promise<any> {}
-
-  async findUserWithEmail(email: string): Promise<any> {}
+export interface UserRepository {
+  create: (data: Prisma.UserCreateInput) => Promise<User>
+  findByEmail: (email: string) => Promise<User | null>
 }
