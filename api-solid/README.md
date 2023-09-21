@@ -37,7 +37,7 @@ Let's say I have an X functionality but I need to impose certain conditions for 
 
 ---
 
-- [ ] Shouldn't be able to register with a duplicated e-mail
+- [x] Shouldn't be able to register with a duplicated e-mail
 
 - [ ] The gym can only be registered by admins
 
@@ -49,7 +49,7 @@ Let's say I have an X functionality but I need to impose certain conditions for 
 
 They are more technical requirements than functional ones. For example, the stack used within a project or the strategy/architecture
 
-- [ ] The user's password needs to be encrypted
-- [ ] The data of the application needs to be persisted with a PostgreSQL database
+- [x] The user's password needs to be encrypted
+- [x] The data of the application needs to be persisted with a PostgreSQL database
 - [ ] All the data lists needs a pagination of 20 items per page
 - [ ] The user needs to be identified with a JWT (JSON Web Token)

@@ -7,11 +7,9 @@ import { RegisterUserUseCase } from './register.service'
 
 describe('@use-cases/user/register', () => {
   it('should be able to create a new user', async () => {
-    const registerUserUseCase = new RegisterUserUseCase(
-      new InMemoryUserRepository(),
-    )
+    const sut = new RegisterUserUseCase(new InMemoryUserRepository())
 
-    const { id } = await registerUserUseCase.handle({
+    const { id } = await sut.handle({
       name: 'john doe',
       email: 'johndoe@example.com',
       password: '123321',
@@ -21,13 +19,11 @@ describe('@use-cases/user/register', () => {
   })
 
   it('should hash the password properly when creating a new user', async () => {
-    const registerUserUseCase = new RegisterUserUseCase(
-      new InMemoryUserRepository(),
-    )
+    const sut = new RegisterUserUseCase(new InMemoryUserRepository())
 
     const password = '123321'
 
-    const user = await registerUserUseCase.handle({
+    const user = await sut.handle({
       name: 'john doe',
       email: 'johndoe@example.com',
       password,
@@ -42,20 +38,18 @@ describe('@use-cases/user/register', () => {
   })
 
   it("shouldn't be able to create a new user with an existing email", async () => {
-    const registerUserUseCase = new RegisterUserUseCase(
-      new InMemoryUserRepository(),
-    )
+    const sut = new RegisterUserUseCase(new InMemoryUserRepository())
 
     const email = 'johndoe@example.com'
 
-    await registerUserUseCase.handle({
+    await sut.handle({
       name: 'john doe',
       email,
       password: '123321',
     })
 
     await expect(
-      registerUserUseCase.handle({
+      sut.handle({
         name: 'john doe',
         email,
         password: '123321',
