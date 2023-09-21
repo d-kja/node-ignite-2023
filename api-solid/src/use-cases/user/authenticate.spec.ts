@@ -1,14 +1,19 @@
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.repository'
 import bcrypt from 'bcryptjs'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { InvalidCredentialsError } from '../errors/invalid-credentials-error'
 import { AuthenticateUserUseCase } from './authenticate.service'
 
-describe('@use-case/user/authenticate', async () => {
-  it('should be able to authenticate a user', async () => {
-    const userRepository = new InMemoryUserRepository()
-    const sut = new AuthenticateUserUseCase(userRepository)
+let userRepository: InMemoryUserRepository
+let sut: AuthenticateUserUseCase
 
+describe('@use-case/user/authenticate', async () => {
+  beforeEach(() => {
+    userRepository = new InMemoryUserRepository()
+    sut = new AuthenticateUserUseCase(userRepository)
+  })
+
+  it('should be able to authenticate a user', async () => {
     const password = '123321'
     const email = 'johndoe@example.com'
 
@@ -21,7 +26,7 @@ describe('@use-case/user/authenticate', async () => {
       password_hash: passwordHash,
     })
 
-    const { user } = await sut.execute({
+    const { user } = await sut.handle({
       email,
       password,
     })
@@ -37,11 +42,8 @@ describe('@use-case/user/authenticate', async () => {
   })
 
   it("shouldn't be able to authenticate if user doesn't exist", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const sut = new AuthenticateUserUseCase(userRepository)
-
     await expect(() =>
-      sut.execute({
+      sut.handle({
         email: 'notjohndoe@example.com',
         password: '321123',
       }),
@@ -49,9 +51,6 @@ describe('@use-case/user/authenticate', async () => {
   })
 
   it("shouldn't be able to authenticate if password doesn't match", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const sut = new AuthenticateUserUseCase(userRepository)
-
     const email = 'johndoe@example.com'
 
     await userRepository.create({
@@ -61,7 +60,7 @@ describe('@use-case/user/authenticate', async () => {
     })
 
     await expect(() =>
-      sut.execute({
+      sut.handle({
         email,
         password: '321123',
       }),

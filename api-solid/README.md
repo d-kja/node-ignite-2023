@@ -7,8 +7,8 @@ It consists of a Gym Pass style application.
 The functionality of the application, what can the user do within our application.
 
 - [x] Should be able to register a new user
-- [ ] Should be able to authenticate an existing user
-- [ ] Should be able get the data of a specific user
+- [x] Should be able to authenticate an existing user
+- [x] Should be able get the data of a specific user
 
 - [ ] Should be able to check-in with the application (_`linked with the first BR`_)
 - [ ] Should be able to get the total check-ins of a user
