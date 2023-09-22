@@ -10,12 +10,12 @@ The functionality of the application, what can the user do within our applicatio
 - [x] Should be able to authenticate an existing user
 - [x] Should be able get the data of a specific user
 
-- [ ] Should be able to check-in with the application (_`linked with the first BR`_)
+- [x] Should be able to check-in with the application (_`linked with the first BR`_)
 - [ ] Should be able to get the total check-ins of a user
 - [ ] Should be able to validate the check-in of a user
-- [ ] Should be able to check-in with a specific gym
+- [x] Should be able to check-in with a specific gym
 
-- [ ] Should be able to register a new gym
+- [x] Should be able to register a new gym
 - [ ] Should be able to search for available nearby gyms
 - [ ] Should be able to search for gyms by querying their name
 
@@ -41,9 +41,10 @@ Let's say I have an X functionality but I need to impose certain conditions for 
 
 - [ ] The gym can only be registered by admins
 
+- [x] The user can only check-in once a day
 - [ ] The check-in can only be validated by admins
 - [ ] The check-in can only be validated within a span of 20 minutes
-- [ ] The user can only make a check-in if he's within 100m away from the gym
+- [x] The user can only make a check-in if he's within 100m away from the gym
 
 ## NFRs (Non functional requirements)
 

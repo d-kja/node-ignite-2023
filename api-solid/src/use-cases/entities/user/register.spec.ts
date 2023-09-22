@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.repository'
-import { UserAlreadyExistsError } from '../errors/user-already-exists.error'
+import { UserAlreadyExistsError } from '../../errors/user-already-exists.error'
 import { RegisterUserUseCase } from './register.service'
 
 let sut: RegisterUserUseCase
