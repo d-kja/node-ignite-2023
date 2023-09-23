@@ -19,5 +19,7 @@ server.setErrorHandler((error, _, reply) => {
     // TODO: log this error using an external service such as sentry, datadog, newrelic
   }
 
-  return reply.status(500).send({ message: 'Internal server error.' })
+  return reply
+    .status(500)
+    .send({ message: error.message ?? 'Internal server error.' })
 })

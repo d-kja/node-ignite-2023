@@ -11,13 +11,14 @@ The functionality of the application, what can the user do within our applicatio
 - [x] Should be able get the data of a specific user
 
 - [x] Should be able to check-in with the application (_`linked with the first BR`_)
-- [ ] Should be able to get the total check-ins of a user
-- [ ] Should be able to validate the check-in of a user
+- [x] Should be able to get the check-ins history of a user
+- [x] Should be able to get the total check-ins of a user
+- [x] Should be able to validate the check-in of a user
 - [x] Should be able to check-in with a specific gym
 
 - [x] Should be able to register a new gym
-- [ ] Should be able to search for available nearby gyms
-- [ ] Should be able to search for gyms by querying their name
+- [x] Should be able to search for available nearby gyms
+- [x] Should be able to search for gyms by querying their name
 
 ## BRs (Business rules)
 
@@ -52,5 +53,5 @@ They are more technical requirements than functional ones. For example, the stac
 
 - [x] The user's password needs to be encrypted
 - [x] The data of the application needs to be persisted with a PostgreSQL database
-- [ ] All the data lists needs a pagination of 20 items per page
+- [x] All the data lists needs a pagination of 20 items per page
 - [ ] The user needs to be identified with a JWT (JSON Web Token)
