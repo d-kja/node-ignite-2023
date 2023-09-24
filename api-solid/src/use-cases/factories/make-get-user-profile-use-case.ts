@@ -2,8 +2,8 @@ import { PrismaUserRepository } from '@/repositories/prisma/prisma-user.reposito
 import { GetUserProfileUseCase } from '../entities/user/get-profile.service'
 
 export const makeGetUserProfileUseCase = () => {
-  const userRepository = new PrismaUserRepository()
-  const getUserProfileUseCase = new GetUserProfileUseCase(userRepository)
+  const repository = new PrismaUserRepository()
+  const useCase = new GetUserProfileUseCase(repository)
 
-  return getUserProfileUseCase
+  return useCase
 }
