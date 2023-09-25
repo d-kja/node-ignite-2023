@@ -7,12 +7,21 @@ if (process.env.NODE_ENV === 'test') {
   config({
     path: '.env.test',
   })
+} else if (process.env.NODE_ENV === 'development') {
+  config({
+    path: '.env.development',
+  })
+} else {
+  config()
 }
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['production', 'development', 'test']).default('production'),
   PORT: z.coerce.number().default(4000),
   SERVER_HOST: z.string().default('0.0.0.0'),
+
+  // AUTHORIZATION
+  JWT_SECRET: z.string(),
 
   // DATABASE CONNECTION
   DATABASE_URL: z.string(),

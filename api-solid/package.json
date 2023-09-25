@@ -5,12 +5,22 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsup src --out-dir build",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --dir src/use-cases",
+    "test:watch": "vitest --dir src/use-cases",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "setup:test-create-prisma-environment": "cd prisma/vitest-environment-prisma && bun link && cd ../../",
+    "setup:test-install-prisma-environment": "bun link vitest-environment-prisma",
+    "pretest:e2e": "bun run setup:test-create-prisma-environment && bun run setup:test-install-prisma-environment",
+    "test:e2e": "vitest run --dir src/http",
+    "test:e2e:watch": "vitest --dir src/http",
+    "npm:setup:test-create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
+    "npm:setup:test-install-prisma-environment": "npm link vitest-environment-prisma",
+    "npm:pretest:e2e": "npm run npm:setup:test-create-prisma-environment && npm run npm:setup:test-install-prisma-environment",
+    "npm:test:e2e": "vitest run --dir src/http"
   },
   "dependencies": {
+    "@fastify/jwt": "^7.2.1",
     "@prisma/client": "5.3.1",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.10",
@@ -21,11 +31,13 @@
   "devDependencies": {
     "@rocketseat/eslint-config": "2.1.0",
     "@types/bcryptjs": "^2.4.4",
+    "@types/supertest": "^2.0.12",
     "@vitest/coverage-v8": "^0.34.4",
     "@vitest/ui": "^0.34.4",
     "bun-types": "latest",
     "eslint": "^8.49.0",
     "prisma": "5.3.1",
+    "supertest": "^6.3.3",
     "tsup": "7.2.0",
     "tsx": "3.12.10",
     "typescript": "^5.2.2"
