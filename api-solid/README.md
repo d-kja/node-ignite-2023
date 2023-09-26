@@ -40,11 +40,11 @@ Let's say I have an X functionality but I need to impose certain conditions for 
 
 - [x] Shouldn't be able to register with a duplicated e-mail
 
-- [ ] The gym can only be registered by admins
+- [x] The gym can only be registered by admins
 
 - [x] The user can only check-in once a day
-- [ ] The check-in can only be validated by admins
-- [ ] The check-in can only be validated within a span of 20 minutes
+- [x] The check-in can only be validated by admins
+- [x] The check-in can only be validated within a span of 20 minutes
 - [x] The user can only make a check-in if he's within 100m away from the gym
 
 ## NFRs (Non functional requirements)
@@ -54,4 +54,4 @@ They are more technical requirements than functional ones. For example, the stac
 - [x] The user's password needs to be encrypted
 - [x] The data of the application needs to be persisted with a PostgreSQL database
 - [x] All the data lists needs a pagination of 20 items per page
-- [ ] The user needs to be identified with a JWT (JSON Web Token)
+- [x] The user needs to be identified with a JWT (JSON Web Token)
