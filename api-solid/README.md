@@ -1,6 +1,6 @@
 # Application
 
-It consists of a Gym Pass style application.
+It consists of a Gym Pass style application
 
 ## FRs (Functional requirements)
 
