@@ -1,7 +1,10 @@
+import { env } from './env'
+
+import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
 import { ZodError } from 'zod'
-import { env } from './env'
+
 import { checkInRoutes } from './http/controller/check-in/routes'
 import { gymRoutes } from './http/controller/gym/route'
 import { userRoutes } from './http/controller/user/routes'
@@ -11,7 +14,31 @@ export const server = fastify()
 // Plugins
 server.register(fastifyJwt, {
   secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
 })
+server.register(fastifyCookie)
+
+/**
+ * If the refresh cookie isn't being set you need to do this
+ *
+ * # On the server
+ * server.register(cors, {
+ *   origin: true,
+ *   credentials: true,
+ * })
+ *
+ * # On the web
+ * axios.create({
+ *   baseURL: ...,
+ *   withCredentials: true
+ * })
+ */
 
 // Routes
 server.register(userRoutes)

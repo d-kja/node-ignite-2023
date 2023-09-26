@@ -15,6 +15,9 @@ describe('@controller/gym/create', async () => {
   it('should be able to search gyms by query', async () => {
     const { token } = await createAndAuthenticateUser({
       app: http,
+      opt: {
+        isAdmin: true,
+      },
     })
 
     await request(http.server)

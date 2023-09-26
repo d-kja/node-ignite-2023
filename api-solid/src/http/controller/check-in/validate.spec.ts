@@ -13,7 +13,12 @@ describe('@controller/check-in/metrics', async () => {
   })
 
   it("should be able to retrieve user's check-in metrics", async () => {
-    const { token } = await createAndAuthenticateUser({ app: http })
+    const { token } = await createAndAuthenticateUser({
+      app: http,
+      opt: {
+        isAdmin: true,
+      },
+    })
 
     const user = await db.user.findFirstOrThrow()
     const gym = await db.gym.create({
