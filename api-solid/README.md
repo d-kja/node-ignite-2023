@@ -20,7 +20,7 @@ The functionality of the application, what can the user do within our applicatio
 - [x] Should be able to search for available nearby gyms
 - [x] Should be able to search for gyms by querying their name
 
-## BRs (Business rules)
+## BRs (Business rule)
 
 Business rules are the paths that each requirement can take, choices that can be made with 'em. It basically says ok we have this functionality, right? But we need to impose certain limits to improve it.
 
