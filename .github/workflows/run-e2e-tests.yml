@@ -9,7 +9,7 @@ jobs:
   run-e2e-tests:
     name: Run E2E tests
     runs-on: ubuntu-latest
-    
+
     defaults:
       run:
         working-directory: ./api-solid
@@ -35,6 +35,9 @@ jobs:
 
       - name: Install dependencies
         run: bun install
+
+      - name: Migrate database schemas
+        run: bunx prisma migrate deploy
 
       - name: Run E2E tests
         run: bun run "test:e2e"
