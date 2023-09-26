@@ -2,7 +2,7 @@
 
 It consists of a Gym Pass style application.
 
-## FRs (Functional requirements)
+## FRs (Functional requirement)
 
 The functionality of the application, what can the user do within our application.
 
