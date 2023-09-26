@@ -38,6 +38,8 @@ jobs:
 
       - name: Migrate database schemas
         run: bunx prisma migrate deploy
+        env:
+          DATABASE_URL: 'postgresql://docker:docker@localhost:5432/apisolid?schema=public'
 
       - name: Run E2E tests
         run: bun run "test:e2e"
