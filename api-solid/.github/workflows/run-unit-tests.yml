@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    # Monorepo folder config
-    # paths:
-    #   - 'api-solid/**'
 
 jobs:
   run-unit-tests:
