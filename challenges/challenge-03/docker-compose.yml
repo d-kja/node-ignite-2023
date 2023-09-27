@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  database-pg:
+    image: bitnami/postgresql
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=findafriend
+    ports:
+      - 5432:5432
+
+  redis:
+    image: bitnami/redis
+    environment:
+      - REDIS_PASSWORD=docker
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
+    ports:
+      - 6379:6379
