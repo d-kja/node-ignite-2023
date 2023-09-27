@@ -36,6 +36,7 @@ model Organization {
   whatsapp String
 
   created_at DateTime @default(now())
+  Pet        Pet[]
 
   @@map("organizations")
 }
@@ -52,10 +53,14 @@ model Pet {
   energy            Int // level of energy
   independence      Int // level of independence
   isClaustrophobic  Boolean
+  isAdopted         Boolean  @default(false)
   otherRequirements String[]
 
   state String
   city  String
+
+  org_id String
+  org    Organization @relation(fields: [org_id], references: [id])
 
   created_at DateTime @default(now())
 

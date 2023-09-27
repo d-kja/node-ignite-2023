@@ -2,6 +2,9 @@
   "name": "challenge-03",
   "module": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "test": "vitest --dir src/services"
+  },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
     "bun-types": "latest",
