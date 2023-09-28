@@ -8,7 +8,6 @@ interface ListAvailablePetsRequest {
   city: string
 }
 
-
 export class ListAvailablePetsUseCase {
   private petRepository: PetRepository
 
@@ -16,8 +15,8 @@ export class ListAvailablePetsUseCase {
     this.petRepository = petRepository
   }
 
-  async handle({city}: ListAvailablePetsRequest) {
+  async handle({ city }: ListAvailablePetsRequest) {
     const pets = await this.petRepository.findByCity(city)
-    return pets
+    return { pets }
   }
 }

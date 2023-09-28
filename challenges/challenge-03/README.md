@@ -2,28 +2,43 @@
 
 ## Functional requirements
 
-- [ ] Should be able to register a new **pet**
-- [ ] Should be able to list all the **pets available for adoption in a specific city**
-- [ ] Should be able to filter the pets **by their characteristics**
-- [ ] Should be able to visualize the **details of a pet available for adoption**
-- [ ] Should be able to **register as an ORG**
-- [ ] Should be able to **login as an ORG**
+- [x] Should be able to register a new **pet**
+- [x] Should be able to list all the **pets available for adoption in a specific city**
+- [x] Should be able to filter the pets **by their characteristics**
+- [x] Should be able to visualize the **details of a pet available for adoption**
+- [x] Should be able to **register as an ORG**
+- [x] Should be able to **login as an ORG**
 
 ## Business rules
 
-- [ ] Should require the city when trying to **list the pets**
-- [ ] Should require Whatsapp and address for each **ORG**
-- [ ] A pet should be connected to an ORG
-- [ ] When a user wants to adopt a pet, he should get in contact with the ORG through Whasapp
-- [ ] Every filter besides the city are optional
+- [x] Should require the city when trying to **list the pets**
+- [x] Should require Whatsapp and address for each **ORG**
+- [x] A pet should be connected to an ORG
+- [ ] ~~When a user wants to adopt a pet, he should get in contact with the ORG through Whasapp~~ `# was it supposed to be a route just for that??`
+- [x] Every filter besides the city are optional
 - [ ] The ORG needs to login in order to access the application as an administrator
 
 ## Non-Functional requirements
 
-- [ ] Passwords needs to be encrypted before persisting the data
-- [ ] The data of the application needs to be persisted with a PostgreSQL database
+- [x] Passwords needs to be encrypted before persisting the data
+- [x] The data of the application needs to be persisted with a PostgreSQL database
 - [ ] Any route used to list data needs pagination
 - [ ] The user is going to be identified through a JWT Token
+
+### Repository
+
+- [x] Create in-memory repository for testing purposes
+- [ ] Create prisma repository
+
+### Tests
+
+- [x] Unit testing for the use cases/services
+- [ ] E2E tests for the controller routes
+
+### Github Actions
+
+- [ ] Create workflow for the Unit tests
+- [ ] Create workflow for the E2E
 
 ## Entities
 

@@ -62,6 +62,7 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
     })
 
     const { pets } = await sut.handle({
+      city: 'umuarama',
       size: 'SMOL',
     })
 
@@ -115,6 +116,7 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
 
     const { pets } = await sut.handle({
       size: 'SMOL',
+      city: 'umuarama',
       energy: 1,
     })
 
@@ -129,5 +131,41 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
         }),
       ]),
     )
+  })
+
+  it("shouldn't be able to filter without city", async () => {
+    const petData = {
+      name: 'pet-example',
+      description: '...',
+      city: 'umuarama',
+      state: 'PR',
+      energy: 3,
+      independence: 1,
+      isClaustrophobic: true,
+      org_id: orgId,
+    } as const
+
+    await petRepository.create({
+      ...petData,
+      size: 'LARGE',
+      independence: 1,
+    })
+
+    await petRepository.create({
+      ...petData,
+      size: 'SMOL',
+    })
+
+    await petRepository.create({
+      ...petData,
+      size: 'SMOL',
+      city: 'navirai',
+    })
+
+    await expect(() =>
+      sut.handle({
+        size: 'SMOL',
+      } as any),
+    ).rejects.toBeInstanceOf(Error)
   })
 })

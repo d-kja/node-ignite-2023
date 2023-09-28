@@ -7,6 +7,7 @@
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
+    "@types/bcryptjs": "^2.4.4",
     "bun-types": "latest",
     "prisma": "^5.3.1",
     "vite-tsconfig-paths": "^4.2.1",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "fastify": "^4.23.2",
     "redis": "^4.6.10",

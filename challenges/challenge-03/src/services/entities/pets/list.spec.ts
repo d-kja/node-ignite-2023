@@ -41,7 +41,7 @@ describe('@use-case/pets/list-available-pets', async () => {
       name: 'non-adopted pet',
     })
 
-    const pets = await sut.handle({ city: 'umuarama' })
+    const { pets } = await sut.handle({ city: 'umuarama' })
 
     expect(pets).toHaveLength(1)
     expect(pets).toEqual([

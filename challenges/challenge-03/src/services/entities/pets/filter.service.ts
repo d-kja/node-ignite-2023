@@ -1,5 +1,6 @@
 import {
   FilterByCharacteristicsParams,
+  FilterByCharacteristicsSchema,
   PetRepository,
 } from '@/repositories/pet.repository'
 
@@ -15,7 +16,10 @@ export class FilterPetsUseCase {
   }
 
   async handle(data: FilterByCharacteristicsParams) {
-    const filteredPets = await this.petRepository.filterByCharacteristics(data)
+    const validatedData = FilterByCharacteristicsSchema.parse(data)
+
+    const filteredPets =
+      await this.petRepository.filterByCharacteristics(validatedData)
 
     return {
       pets: filteredPets,
