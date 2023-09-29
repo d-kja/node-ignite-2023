@@ -1,5 +1,7 @@
 import { FastifyInstance } from 'fastify'
 
+import { refresh } from './refresh.controller'
+
 export const authRouter = async (app: FastifyInstance) => {
-  app.post('/refresh', async (request, reply) => {})
+  app.post('/refresh', refresh)
 }

@@ -4,18 +4,18 @@ import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.
 import { UserRepository } from '@/repositories/user.repository'
 import { InvalidCredentialsError } from '@/services/errors/invalid-credentials'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { SignUpOrganizationUseCase } from './sign-in.service'
+import { SignInUserUseCase } from './sign-in.service'
 
 let userRepository: UserRepository
-let sut: SignUpOrganizationUseCase
+let sut: SignInUserUseCase
 
-describe('@use-case/organization/sign-up', async () => {
+describe('@use-case/user/sign-up', async () => {
   beforeEach(() => {
     userRepository = new InMemoryUserRepository()
-    sut = new SignUpOrganizationUseCase({ userRepository })
+    sut = new SignInUserUseCase({ userRepository })
   })
 
-  it('should be able to sign in with organization credentials', async () => {
+  it('should be able to sign in with user credentials', async () => {
     const password = '123321'
     const email = 'johndoe@example.com'
 

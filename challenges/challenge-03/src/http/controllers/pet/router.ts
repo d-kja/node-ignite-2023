@@ -1,12 +1,43 @@
 import { FastifyInstance } from 'fastify'
 
+import { validateAuthMiddleware } from '@/http/middlewares/validate-auth.middleware'
+import { validateRoleMiddleware } from '@/http/middlewares/validate-role.middleware'
+
+import { create } from './create.controller'
+import { filter } from './filter.controller'
+import { find } from './find.controller'
+import { list } from './list.controller'
+
 export const petsRouter = async (app: FastifyInstance) => {
   // Query params: ?city=name
-  app.get('/', async (request, reply) => {})
-  app.get('/:id', async (request, reply) => {})
+  app.get(
+    '/',
+    {
+      onRequest: validateAuthMiddleware,
+    },
+    list,
+  )
+  app.get(
+    '/:id',
+    {
+      onRequest: validateAuthMiddleware,
+    },
+    find,
+  )
 
-  app.post('/filter', async (request, reply) => {})
+  app.post(
+    '/filter',
+    {
+      onRequest: validateAuthMiddleware,
+    },
+    filter,
+  )
 
-  // needs to be an organization
-  app.post('/', async (request, reply) => {})
+  app.post(
+    '/',
+    {
+      onRequest: validateRoleMiddleware('ORGANIZATION'),
+    },
+    create,
+  )
 }

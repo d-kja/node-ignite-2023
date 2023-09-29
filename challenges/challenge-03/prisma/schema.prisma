@@ -41,7 +41,7 @@ model User {
   address  String
   whatsapp String
 
-  roles ROLES @default(MEMBER)
+  role ROLES @default(MEMBER)
 
   created_at DateTime @default(now())
   Pet        Pet[]

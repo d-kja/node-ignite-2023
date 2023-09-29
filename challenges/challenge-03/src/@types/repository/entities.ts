@@ -50,6 +50,8 @@ export interface CreatePet {
   user_id: string
 }
 
+export type UserRolesEnum = 'MEMBER' | 'ORGANIZATION'
+
 /**
  * @description
  *
@@ -69,7 +71,7 @@ export interface User {
   cep: string
   address: string
   whatsapp: string
-  role: 'MEMBER' | 'ORGANIZATION'
+  role: UserRolesEnum
   created_at: Date
 }
 
@@ -81,6 +83,6 @@ export interface CreateUser {
   cep: string
   address: string
   whatsapp: string
-  role?: 'MEMBER' | 'ORGANIZATION'
+  role?: UserRolesEnum
   created_at?: Date | string
 }

@@ -1,17 +1,41 @@
-import { CreateOrganization, Organization } from '@/@types/repository/entities'
-import { OrganizationRepository } from '../user.repository'
+import { CreateUser, User } from '@/@types/repository/entities'
+import { prisma } from '@/libs/prisma'
+import { UserRepository } from '../user.repository'
 
-export class PrismaOrganizationRepository implements OrganizationRepository {
-  create(data: CreateOrganization): Promise<Organization> {
-    throw new Error('Method not implemented.')
+export class PrismaUserRepository implements UserRepository {
+  async create(data: CreateUser): Promise<User> {
+    const user = await prisma.user.create({
+      data,
+    })
+
+    return user
   }
-  update(data: Partial<Organization>): Promise<Organization> {
-    throw new Error('Method not implemented.')
+  async update(data: Partial<User>): Promise<User> {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+
+    return updatedUser
   }
-  findById(data: string): Promise<Organization | null> {
-    throw new Error('Method not implemented.')
+  async findById(data: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: data,
+      },
+    })
+
+    return user
   }
-  findByEmail(data: string): Promise<Organization | null> {
-    throw new Error('Method not implemented.')
+  async findByEmail(data: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: data,
+      },
+    })
+
+    return user
   }
 }

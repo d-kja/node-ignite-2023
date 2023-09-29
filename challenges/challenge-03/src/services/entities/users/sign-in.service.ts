@@ -3,23 +3,23 @@ import bcrypt from 'bcryptjs'
 import { UserRepository } from '@/repositories/user.repository'
 import { InvalidCredentialsError } from '@/services/errors/invalid-credentials'
 
-interface SignUpOrganizationUseCaseConstructorParams {
+interface SignInUserUseCaseConstructorParams {
   userRepository: UserRepository
 }
 
-interface SignUpOrganizationUseCaseRequest {
+interface SignInUserUseCaseRequest {
   email: string
   password: string
 }
 
-export class SignUpOrganizationUseCase {
+export class SignInUserUseCase {
   private userRepository: UserRepository
 
-  constructor({ userRepository }: SignUpOrganizationUseCaseConstructorParams) {
+  constructor({ userRepository }: SignInUserUseCaseConstructorParams) {
     this.userRepository = userRepository
   }
 
-  async handle(data: SignUpOrganizationUseCaseRequest) {
+  async handle(data: SignInUserUseCaseRequest) {
     const user = await this.userRepository.findByEmail(data.email)
 
     if (!user) {

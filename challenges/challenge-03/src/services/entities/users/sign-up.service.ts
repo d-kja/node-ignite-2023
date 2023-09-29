@@ -1,24 +1,31 @@
 import { CreateUser } from '@/@types/repository/entities'
 import { UserRepository } from '@/repositories/user.repository'
+import { UserAlreadyExistsError } from '@/services/errors/user-already-exists'
 
 import bcrypt from 'bcryptjs'
 
-interface CreateOrganizationUseCaseConstructorParams {
+interface CreateUserUseCaseConstructorParams {
   userRepository: UserRepository
 }
 
-type CreateOrganizationUseCaseRequest = Omit<CreateUser, 'password_hash'> & {
+type CreateUserUseCaseRequest = Omit<CreateUser, 'password_hash'> & {
   password: string
 }
 
-export class CreateOrganizationUseCase {
+export class CreateUserUseCase {
   private userRepository: UserRepository
 
-  constructor({ userRepository }: CreateOrganizationUseCaseConstructorParams) {
+  constructor({ userRepository }: CreateUserUseCaseConstructorParams) {
     this.userRepository = userRepository
   }
 
-  async handle(data: CreateOrganizationUseCaseRequest) {
+  async handle(data: CreateUserUseCaseRequest) {
+    const userWithSameEmail = await this.userRepository.findByEmail(data.email)
+
+    if (userWithSameEmail) {
+      throw new UserAlreadyExistsError()
+    }
+
     const saltRounds = 8
     const password_hash = await bcrypt.hash(data.password, saltRounds)
 
