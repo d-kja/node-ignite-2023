@@ -29,7 +29,7 @@ export interface Pet {
   otherRequirements: string[]
   state: string
   city: string
-  org_id: string
+  user_id: string
   created_at: Date
 }
 
@@ -47,7 +47,7 @@ export interface CreatePet {
   otherRequirements?: string[]
   state: string
   city: string
-  org_id: string
+  user_id: string
 }
 
 /**
@@ -61,7 +61,7 @@ export interface CreatePet {
  * interface CreateOrganization
  * ```
  */
-export interface Organization {
+export interface User {
   id: string
   name: string
   email: string
@@ -69,10 +69,11 @@ export interface Organization {
   cep: string
   address: string
   whatsapp: string
+  role: 'MEMBER' | 'ORGANIZATION'
   created_at: Date
 }
 
-export interface CreateOrganization {
+export interface CreateUser {
   id?: string
   name: string
   email: string
@@ -80,5 +81,6 @@ export interface CreateOrganization {
   cep: string
   address: string
   whatsapp: string
+  role?: 'MEMBER' | 'ORGANIZATION'
   created_at?: Date | string
 }

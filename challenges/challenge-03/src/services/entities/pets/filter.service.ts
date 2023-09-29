@@ -8,6 +8,10 @@ interface FilterPetsUseCaseConstructorParams {
   petRepository: PetRepository
 }
 
+interface FilterPetsUseCaseRequest extends FilterByCharacteristicsParams {
+  page?: number
+}
+
 export class FilterPetsUseCase {
   private petRepository: PetRepository
 
@@ -15,11 +19,13 @@ export class FilterPetsUseCase {
     this.petRepository = petRepository
   }
 
-  async handle(data: FilterByCharacteristicsParams) {
-    const validatedData = FilterByCharacteristicsSchema.parse(data)
+  async handle({ page = 1, ...rest }: FilterPetsUseCaseRequest) {
+    const validatedData = FilterByCharacteristicsSchema.parse(rest)
 
-    const filteredPets =
-      await this.petRepository.filterByCharacteristics(validatedData)
+    const filteredPets = await this.petRepository.filterByCharacteristics(
+      validatedData,
+      page,
+    )
 
     return {
       pets: filteredPets,

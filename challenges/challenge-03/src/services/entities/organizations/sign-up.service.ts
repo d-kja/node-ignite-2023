@@ -1,44 +1,37 @@
+import { CreateUser } from '@/@types/repository/entities'
+import { UserRepository } from '@/repositories/user.repository'
+
 import bcrypt from 'bcryptjs'
 
-import { OrganizationRepository } from '@/repositories/organization.repository'
-import { InvalidCredentialsError } from '@/services/errors/invalid-credentials'
-
-interface SignUpOrganizationUseCaseConstructorParams {
-  organizationRepository: OrganizationRepository
+interface CreateOrganizationUseCaseConstructorParams {
+  userRepository: UserRepository
 }
 
-interface SignUpOrganizationUseCaseRequest {
-  email: string
+type CreateOrganizationUseCaseRequest = Omit<CreateUser, 'password_hash'> & {
   password: string
 }
 
-export class SignUpOrganizationUseCase {
-  private organizationRepository: OrganizationRepository
+export class CreateOrganizationUseCase {
+  private userRepository: UserRepository
 
-  constructor({
-    organizationRepository,
-  }: SignUpOrganizationUseCaseConstructorParams) {
-    this.organizationRepository = organizationRepository
+  constructor({ userRepository }: CreateOrganizationUseCaseConstructorParams) {
+    this.userRepository = userRepository
   }
 
-  async handle(data: SignUpOrganizationUseCaseRequest) {
-    const organization = await this.organizationRepository.findByEmail(
-      data.email,
-    )
+  async handle(data: CreateOrganizationUseCaseRequest) {
+    const saltRounds = 8
+    const password_hash = await bcrypt.hash(data.password, saltRounds)
 
-    if (!organization) {
-      throw new InvalidCredentialsError()
-    }
+    const user = await this.userRepository.create({
+      name: data.name,
+      email: data.email,
+      address: data.address,
+      cep: data.cep,
+      whatsapp: data.whatsapp,
+      role: data.role,
+      password_hash,
+    })
 
-    const hashedPassword = await bcrypt.compare(
-      data.password,
-      organization.password_hash,
-    )
-
-    if (!hashedPassword) {
-      throw new InvalidCredentialsError()
-    }
-
-    return { organization }
+    return { user }
   }
 }

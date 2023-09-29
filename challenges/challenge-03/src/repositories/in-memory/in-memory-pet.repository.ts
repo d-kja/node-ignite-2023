@@ -21,7 +21,7 @@ export class InMemoryPetRepository implements PetRepository {
       isAdopted: data.isAdopted ?? false,
       otherRequirements: data.otherRequirements ?? [],
       state: data.state,
-      org_id: data.org_id,
+      user_id: data.user_id,
       created_at: new Date(),
     } satisfies Pet
 
@@ -51,35 +51,34 @@ export class InMemoryPetRepository implements PetRepository {
     if (!pet) return null
     return pet
   }
-  async findByCity(city: string): Promise<Pet[]> {
-    const pets = this.repository.filter(
-      (item) => item.city === city && !item.isAdopted,
-    )
+  async findByCity(city: string, page: number): Promise<Pet[]> {
+    const pets = this.repository
+      .filter((item) => item.city === city && !item.isAdopted)
+      .slice((page - 1) * 20, page * 20)
 
     return pets
   }
   async filterByCharacteristics(
     data: FilterByCharacteristicsParams,
+    page: number,
   ): Promise<Pet[]> {
     const characteristicKeys = Object.keys(data)
 
-    const characteristic = this.repository.filter((item) => {
-      const hasEveryCharacteristic = characteristicKeys.every(
-        (unknownKey: string) => {
-          type keysType = keyof typeof data
-          const key = unknownKey as any as keysType
+    const characteristics = this.repository
+      .filter((item) => {
+        const hasEveryCharacteristic = characteristicKeys.every(
+          (unknownKey: string) => {
+            type keysType = keyof typeof data
+            const key = unknownKey as any as keysType
 
-          return item[key] === data[key]
-        },
-      )
+            return item[key] === data[key]
+          },
+        )
 
-      return hasEveryCharacteristic
-    })
+        return hasEveryCharacteristic
+      })
+      .slice((page - 1) * 20, page * 20)
 
-    if (characteristic.length) {
-      return characteristic
-    }
-
-    return this.repository
+    return characteristics
   }
 }

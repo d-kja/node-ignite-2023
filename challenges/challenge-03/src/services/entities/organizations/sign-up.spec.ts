@@ -1,97 +1,52 @@
 import bcrypt from 'bcryptjs'
-
-import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-organization.repository'
-import { OrganizationRepository } from '@/repositories/organization.repository'
-import { InvalidCredentialsError } from '@/services/errors/invalid-credentials'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { SignUpOrganizationUseCase } from './sign-up.service'
 
-let organizationRepository: OrganizationRepository
-let sut: SignUpOrganizationUseCase
+import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.repository'
+import { UserRepository } from '@/repositories/user.repository'
+import { CreateOrganizationUseCase } from './sign-up.service'
 
-describe('@use-case/organization/sign-up', async () => {
+let userRepository: UserRepository
+let sut: CreateOrganizationUseCase
+
+describe('@use-case/organization/create', async () => {
   beforeEach(() => {
-    organizationRepository = new InMemoryOrganizationRepository()
-    sut = new SignUpOrganizationUseCase({ organizationRepository })
+    userRepository = new InMemoryUserRepository()
+    sut = new CreateOrganizationUseCase({ userRepository })
   })
 
-  it('should be able to sign in with organization credentials', async () => {
-    const password = '123321'
-    const email = 'johndoe@example.com'
-
-    const saltRounds = 8
-
-    const password_hash = await bcrypt.hash(password, saltRounds)
-
-    await organizationRepository.create({
-      name: 'sign-in',
-      email,
-      password_hash,
+  it('should be able to create a new organization', async () => {
+    const { user } = await sut.handle({
+      name: 'test',
+      email: 'test',
       cep: 'test',
       address: 'test',
+      password: 'test',
       whatsapp: 'test',
     })
 
-    const { organization } = await sut.handle({
-      email,
-      password,
-    })
-
-    expect(organization).toEqual(
+    expect(user).toEqual(
       expect.objectContaining({
-        email,
-        password_hash,
+        id: expect.any(String),
       }),
     )
   })
 
-  it("shouldn't be able to login with invalid email", async () => {
-    const password = '123321'
-    const email = 'johndoe@example.com'
+  it('should hash the password when persisting data', async () => {
+    const password = '120392130'
 
-    const saltRounds = 8
-
-    const password_hash = await bcrypt.hash(password, saltRounds)
-
-    await organizationRepository.create({
-      name: 'sign-in',
-      email,
-      password_hash,
+    const { user } = await sut.handle({
+      name: 'test',
+      email: 'test',
       cep: 'test',
       address: 'test',
+      password,
       whatsapp: 'test',
     })
 
-    await expect(() =>
-      sut.handle({
-        email: 'fake@example.com',
-        password,
-      }),
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
-  })
-
-  it("shouldn't be able to login with invalid password", async () => {
-    const password = '123321'
-    const email = 'johndoe@example.com'
-
     const saltRounds = 8
 
-    const password_hash = await bcrypt.hash('098098', saltRounds)
+    const comparePassword = await bcrypt.compare(password, user.password_hash)
 
-    await organizationRepository.create({
-      name: 'sign-in',
-      email,
-      password_hash,
-      cep: 'test',
-      address: 'test',
-      whatsapp: 'test',
-    })
-
-    await expect(() =>
-      sut.handle({
-        email,
-        password,
-      }),
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
+    expect(comparePassword).toEqual(true)
   })
 })

@@ -1,24 +1,24 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-organization.repository'
 import { InMemoryPetRepository } from '@/repositories/in-memory/in-memory-pet.repository'
-import { OrganizationRepository } from '@/repositories/organization.repository'
+import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.repository'
 import { PetRepository } from '@/repositories/pet.repository'
+import { UserRepository } from '@/repositories/user.repository'
 import { FilterPetsUseCase } from './filter.service'
 
-let organizationRepository: OrganizationRepository
+let userRepository: UserRepository
 let petRepository: PetRepository
 let sut: FilterPetsUseCase
 
-let orgId: string
+let userId: string
 
 describe('@use-case/pets/filter-by-characteristics', async () => {
   beforeEach(async () => {
     petRepository = new InMemoryPetRepository()
-    organizationRepository = new InMemoryOrganizationRepository()
+    userRepository = new InMemoryUserRepository()
     sut = new FilterPetsUseCase({ petRepository })
 
-    const org = await organizationRepository.create({
+    const org = await userRepository.create({
       name: 'test',
       email: 'test',
       cep: 'test',
@@ -27,7 +27,7 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
       whatsapp: 'test',
     })
 
-    orgId = org.id
+    userId = org.id
   })
 
   it('should be able to filter pets', async () => {
@@ -39,7 +39,7 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
       energy: 3,
       independence: 1,
       isClaustrophobic: true,
-      org_id: orgId,
+      user_id: userId,
     } as const
 
     await petRepository.create({
@@ -91,7 +91,7 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
       energy: 3,
       independence: 1,
       isClaustrophobic: true,
-      org_id: orgId,
+      user_id: userId,
     } as const
 
     await petRepository.create({
@@ -142,7 +142,7 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
       energy: 3,
       independence: 1,
       isClaustrophobic: true,
-      org_id: orgId,
+      user_id: userId,
     } as const
 
     await petRepository.create({
@@ -167,5 +167,40 @@ describe('@use-case/pets/filter-by-characteristics', async () => {
         size: 'SMOL',
       } as any),
     ).rejects.toBeInstanceOf(Error)
+  })
+
+  it('should implement pagination', async () => {
+    const petData = {
+      name: 'pet-example',
+      description: '...',
+      city: 'umuarama',
+      state: 'PR',
+      energy: 3,
+      independence: 1,
+      isClaustrophobic: true,
+      user_id: userId,
+    } as const
+
+    for (let index = 1; index <= 22; index++) {
+      await petRepository.create({
+        ...petData,
+        name: `pet-${index}`,
+      })
+    }
+
+    const { pets } = await sut.handle({
+      city: 'umuarama',
+      page: 2,
+    })
+
+    expect(pets).toHaveLength(2)
+    expect(pets).toEqual([
+      expect.objectContaining({
+        name: 'pet-21',
+      }),
+      expect.objectContaining({
+        name: 'pet-22',
+      }),
+    ])
   })
 })

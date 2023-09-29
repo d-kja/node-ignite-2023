@@ -1,31 +1,29 @@
 import { CreatePet } from '@/@types/repository/entities'
-import { OrganizationRepository } from '@/repositories/organization.repository'
 import { PetRepository } from '@/repositories/pet.repository'
+import { UserRepository } from '@/repositories/user.repository'
 import { ResourceNotFoundError } from '@/services/errors/resource-not-found'
 
 interface CreatePetUseCaseConstructorParams {
   petRepository: PetRepository
-  organizationRepository: OrganizationRepository
+  userRepository: UserRepository
 }
 
 export class CreatePetUseCase {
   private petRepository: PetRepository
-  private organizationRepository: OrganizationRepository
+  private userRepository: UserRepository
 
   constructor({
     petRepository,
-    organizationRepository,
+    userRepository,
   }: CreatePetUseCaseConstructorParams) {
     this.petRepository = petRepository
-    this.organizationRepository = organizationRepository
+    this.userRepository = userRepository
   }
 
   async handle(data: CreatePet) {
-    const hasValidOrganization = await this.organizationRepository.findById(
-      data.org_id,
-    )
+    const hasValidUser = await this.userRepository.findById(data.user_id)
 
-    if (!hasValidOrganization) {
+    if (!hasValidUser) {
       throw new ResourceNotFoundError()
     }
 

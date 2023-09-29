@@ -14,7 +14,7 @@ const petBase = {
   energy: 3,
   independence: 1,
   isClaustrophobic: true,
-  org_id: 'invalid-id',
+  user_id: 'invalid-id',
 } as const
 
 describe('@use-case/pets/list-available-pets', async () => {
@@ -48,6 +48,27 @@ describe('@use-case/pets/list-available-pets', async () => {
       expect.objectContaining({
         name: 'non-adopted pet',
         isAdopted: false,
+      }),
+    ])
+  })
+
+  it('should have pagination', async () => {
+    for (let index = 1; index <= 22; index++) {
+      petRepository.create({
+        ...petBase,
+        name: `pet-${index}`,
+      })
+    }
+
+    const { pets } = await sut.handle({ city: 'umuarama', page: 2 })
+
+    expect(pets).toHaveLength(2)
+    expect(pets).toEqual([
+      expect.objectContaining({
+        name: 'pet-21',
+      }),
+      expect.objectContaining({
+        name: 'pet-22',
       }),
     ])
   })

@@ -1,28 +1,28 @@
-import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-organization.repository'
 import { InMemoryPetRepository } from '@/repositories/in-memory/in-memory-pet.repository'
-import { OrganizationRepository } from '@/repositories/organization.repository'
+import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.repository'
 import { PetRepository } from '@/repositories/pet.repository'
+import { UserRepository } from '@/repositories/user.repository'
 import { ResourceNotFoundError } from '@/services/errors/resource-not-found'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { CreatePetUseCase } from './create.service'
 
 let petRepository: PetRepository
-let organizationRepository: OrganizationRepository
+let userRepository: UserRepository
 let sut: CreatePetUseCase
 
 describe('@use-case/pets/create', async () => {
   beforeEach(async () => {
     petRepository = new InMemoryPetRepository()
-    organizationRepository = new InMemoryOrganizationRepository()
+    userRepository = new InMemoryUserRepository()
 
     sut = new CreatePetUseCase({
       petRepository,
-      organizationRepository,
+      userRepository,
     })
   })
 
   it('should be able to create a new pet', async () => {
-    const organization = await organizationRepository.create({
+    const user = await userRepository.create({
       name: 'test',
       email: 'test',
       cep: 'test',
@@ -39,7 +39,7 @@ describe('@use-case/pets/create', async () => {
       energy: 3,
       independence: 1,
       isClaustrophobic: true,
-      org_id: organization.id,
+      user_id: user.id,
     } as const
 
     const { pet } = await sut.handle(petData)
@@ -56,7 +56,7 @@ describe('@use-case/pets/create', async () => {
       energy: 3,
       independence: 1,
       isClaustrophobic: true,
-      org_id: 'invalid-id',
+      user_id: 'invalid-id',
     } as const
 
     await expect(() => sut.handle(petData)).rejects.toBeInstanceOf(

@@ -1,23 +1,23 @@
-import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-organization.repository'
 import { InMemoryPetRepository } from '@/repositories/in-memory/in-memory-pet.repository'
-import { OrganizationRepository } from '@/repositories/organization.repository'
+import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.repository'
 import { PetRepository } from '@/repositories/pet.repository'
+import { UserRepository } from '@/repositories/user.repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { FindAvailablePetUseCase } from './find-available-pet.service'
 
 let petRepository: PetRepository
-let organizationRepository: OrganizationRepository
+let userRepository: UserRepository
 let sut: FindAvailablePetUseCase
 
-let orgId: string
+let userId: string
 
 describe('@use-case/pets/find-available-pet', async () => {
   beforeEach(async () => {
     petRepository = new InMemoryPetRepository()
-    organizationRepository = new InMemoryOrganizationRepository()
+    userRepository = new InMemoryUserRepository()
     sut = new FindAvailablePetUseCase({ petRepository })
 
-    const org = await organizationRepository.create({
+    const org = await userRepository.create({
       name: 'test',
       email: 'test',
       cep: 'test',
@@ -26,7 +26,7 @@ describe('@use-case/pets/find-available-pet', async () => {
       whatsapp: 'test',
     })
 
-    orgId = org.id
+    userId = org.id
   })
 
   it('should be able to find a pet', async () => {
@@ -38,7 +38,7 @@ describe('@use-case/pets/find-available-pet', async () => {
       energy: 3,
       independence: 1,
       isClaustrophobic: true,
-      org_id: orgId,
+      user_id: userId,
     } as const
 
     const { id } = await petRepository.create(petData)

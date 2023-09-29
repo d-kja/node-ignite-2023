@@ -23,8 +23,14 @@ enum PET_SIZE {
   LARGE
 }
 
+enum ROLES {
+  MEMBER
+  ORGANIZATION
+}
+
 // MODELS
-model Organization {
+// instead of calling it ORG I prefered to call it user as I wanna implement the role validation
+model User {
   id String @id @default(uuid())
 
   name          String
@@ -35,10 +41,12 @@ model Organization {
   address  String
   whatsapp String
 
+  roles ROLES @default(MEMBER)
+
   created_at DateTime @default(now())
   Pet        Pet[]
 
-  @@map("organizations")
+  @@map("users")
 }
 
 model Pet {
@@ -59,8 +67,8 @@ model Pet {
   state String
   city  String
 
-  org_id String
-  org    Organization @relation(fields: [org_id], references: [id])
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id])
 
   created_at DateTime @default(now())
 

@@ -23,6 +23,9 @@ export interface PetRepository {
   create(data: CreatePet): Promise<Pet>
   update(data: Partial<Pet>): Promise<Pet>
   findById(data: string): Promise<Pet | null>
-  findByCity(data: string): Promise<Pet[]>
-  filterByCharacteristics(data: FilterByCharacteristicsParams): Promise<Pet[]>
+  findByCity(data: string, page: number): Promise<Pet[]>
+  filterByCharacteristics(
+    data: FilterByCharacteristicsParams,
+    page: number,
+  ): Promise<Pet[]>
 }

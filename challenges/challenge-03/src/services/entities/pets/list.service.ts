@@ -6,6 +6,7 @@ interface ListAvailablePetsUseCaseConstructorParams {
 
 interface ListAvailablePetsRequest {
   city: string
+  page?: number
 }
 
 export class ListAvailablePetsUseCase {
@@ -15,8 +16,8 @@ export class ListAvailablePetsUseCase {
     this.petRepository = petRepository
   }
 
-  async handle({ city }: ListAvailablePetsRequest) {
-    const pets = await this.petRepository.findByCity(city)
+  async handle({ city, page = 1 }: ListAvailablePetsRequest) {
+    const pets = await this.petRepository.findByCity(city, page)
     return { pets }
   }
 }
