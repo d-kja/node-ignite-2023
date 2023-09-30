@@ -7,8 +7,8 @@ import { ZodError } from 'zod'
 import { env } from './env'
 
 import { authRouter } from './http/controllers/auth/router'
-import { organizationsRouter } from './http/controllers/user/router'
 import { petsRouter } from './http/controllers/pet/router'
+import { userRouter } from './http/controllers/user/router'
 
 export const app = fastify()
 
@@ -26,8 +26,8 @@ app.register(jwt, {
 })
 
 // Routes
-app.register(organizationsRouter, {
-  prefix: '/org',
+app.register(userRouter, {
+  prefix: '/user',
 })
 app.register(petsRouter, {
   prefix: '/pet',

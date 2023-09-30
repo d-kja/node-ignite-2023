@@ -1,8 +1,8 @@
 type PetAgeEnum = 'NEW' | 'NEUTRAL' | 'OLD'
 type PetSizeEnum = 'SMOL' | 'NORMAL' | 'LARGE'
 
-type PetEnergyEnum = 1 | 2 | 3 | 4 | 5
-type PetIndependenceEnum = 1 | 2 | 3
+export type PetEnergyEnum = 1 | 2 | 3 | 4 | 5
+export type PetIndependenceEnum = 1 | 2 | 3
 
 /**
  * @description

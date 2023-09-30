@@ -3,13 +3,21 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "test": "vitest --dir src/services"
+    "dev": "bun --watch src/index.ts",
+    "test": "vitest --dir src/services",
+    "test:watch": "vitest run --dir src/services",
+    "test:setup-environment": "cd ./prisma/vitest-environment-prisma && bun link && cd ../../ && bun link vitest-environment-prisma",
+    "pretest:e2e": "bun run test:setup-environment",
+    "test:e2e": "vitest run --dir src/http",
+    "test:e2e:watch": "vitest --dir src/http"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
     "@types/bcryptjs": "^2.4.4",
+    "@types/supertest": "^2.0.13",
     "bun-types": "latest",
     "prisma": "^5.3.1",
+    "supertest": "^6.3.3",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.5"
   },

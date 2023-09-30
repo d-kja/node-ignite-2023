@@ -16,24 +16,24 @@
 - [x] A pet should be connected to an ORG
 - [ ] ~~When a user wants to adopt a pet, he should get in contact with the ORG through Whasapp~~ `# was it supposed to be a route just for that??`
 - [x] Every filter besides the city are optional
-- [ ] The ORG needs to login in order to access the application as an administrator
+- [x] The ORG needs to login in order to access the application as an administrator
 
 ## Non-Functional requirements
 
 - [x] Passwords needs to be encrypted before persisting the data
 - [x] The data of the application needs to be persisted with a PostgreSQL database
-- [ ] Any route used to list data needs pagination
-- [ ] The user is going to be identified through a JWT Token
+- [x] Any route used to list data needs pagination
+- [x] The user is going to be identified through a JWT Token
 
 ### Repository
 
 - [x] Create in-memory repository for testing purposes
-- [ ] Create prisma repository
+- [x] Create prisma repository
 
 ### Tests
 
 - [x] Unit testing for the use cases/services
-- [ ] E2E tests for the controller routes
+- [x] E2E tests for the controller routes
 
 ### Github Actions
 

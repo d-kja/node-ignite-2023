@@ -1,0 +1,31 @@
+import request from 'supertest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+
+import { app } from '@/app'
+
+describe('@http/user/sign-up', async () => {
+  beforeAll(async () => {
+    await app.ready()
+  })
+  afterAll(async () => {
+    await app.close()
+  })
+
+  const server = app.server
+
+  it('should be able to sign up', async () => {
+    const user = {
+      name: 'john doe',
+      email: 'johndoe@example.com',
+      password: '123321',
+      cep: '00000000',
+      address: 'example...',
+      whatsapp: '9999999999',
+      role: 'MEMBER',
+    }
+
+    const response = await request(server).post('/user/sign-up').send(user)
+
+    expect(response.statusCode).toEqual(201)
+  })
+})
