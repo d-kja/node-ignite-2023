@@ -32,10 +32,10 @@ jobs:
       - name: install dependencies
         run: bun install
 
-      # - name: Migrate database
-      #   run: bunx prisma migrate dev
-      #   env:
-      #     DATABASE_URL: 'postgresql://docker:docker@localhost:5432/findafriend?schema=public'
+      - name: Migrate database
+        run: bunx prisma migrate dev
+        env:
+          DATABASE_URL: 'postgresql://docker:docker@localhost:5432/findafriend?schema=public'
 
       - name: Run end-to-end tests
         run: bun run test:e2e
