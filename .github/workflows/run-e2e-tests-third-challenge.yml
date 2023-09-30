@@ -1,0 +1,50 @@
+name: Run end-to-end tests
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'challenges/challenge-03/**'
+
+jobs:
+  run-tests:
+    name: Run end-to-end tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: './challenges/challenge-03'
+
+    services:
+      database-pg:
+        image: bitnami/postgresql
+        env:
+          POSTGRESQL_USERNAME: docker
+          POSTGRESQL_PASSWORD: docker
+          POSTGRESQL_DATABASE: findafriend
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: install dependencies
+        run: bun install
+
+      - name: Migrate database
+        run: bunx prisma migrate dev
+
+      - name: Run end-to-end tests
+        run: bun run test:e2e
+        env:
+          DATABASE_URL: 'postgresql://docker:docker@localhost:5432/findafriend?schema=public'
+          JWT_SECRET: 'development'
+          REDIS_URL: 'redis://localhost:6379' # just so my .env doenst throw
+          REDIS_PASSWORD: 'docker' # just so my .env doenst throw

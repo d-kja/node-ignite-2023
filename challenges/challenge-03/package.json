@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch src/index.ts",
-    "test": "vitest --dir src/services",
-    "test:watch": "vitest run --dir src/services",
+    "test": "vitest run --dir src/services",
+    "test:watch": "vitest --dir src/services",
     "test:setup-environment": "cd ./prisma/vitest-environment-prisma && bun link && cd ../../ && bun link vitest-environment-prisma",
     "pretest:e2e": "bun run test:setup-environment",
     "test:e2e": "vitest run --dir src/http",
