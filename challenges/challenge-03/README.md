@@ -37,8 +37,8 @@
 
 ### Github Actions
 
-- [ ] Create workflow for the Unit tests
-- [ ] Create workflow for the E2E
+- [x] Create workflow for the Unit tests
+- [x] Create workflow for the E2E
 
 ## Entities
 
