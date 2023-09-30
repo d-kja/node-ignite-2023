@@ -11,9 +11,9 @@ describe('@http/auth/refresh', async () => {
     await app.close()
   })
 
-  const server = app.server
-
   it('should be able to refresh token', async () => {
+    const server = app.server
+
     const email = 'johndoe@example.com'
     const password = '123321'
 

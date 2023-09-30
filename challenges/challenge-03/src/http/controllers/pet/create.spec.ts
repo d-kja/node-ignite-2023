@@ -14,9 +14,9 @@ describe('@http/pets/create', async () => {
     await app.close()
   })
 
-  const server = app.server
-
   it('should be able to create a new pet', async () => {
+    const server = app.server
+
     const email = 'johndoe@example.com'
     const password = '123321'
 

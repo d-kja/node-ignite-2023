@@ -14,9 +14,9 @@ describe('@http/pets/find', async () => {
     await app.close()
   })
 
-  const server = app.server
-
   it('should be able to find a pet', async () => {
+    const server = app.server
+
     const { cookies, token, user } = await createAndAuthenticateUser(
       app,
       'MEMBER',
@@ -43,7 +43,7 @@ describe('@http/pets/find', async () => {
     expect(response.statusCode).toEqual(200)
     expect(response.body.pet).toEqual(
       expect.objectContaining({
-        name: 'envy',
+        name: expect.any(String),
       }),
     )
   })

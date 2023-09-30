@@ -11,9 +11,9 @@ describe('@http/user/sign-in', async () => {
     await app.close()
   })
 
-  const server = app.server
-
   it('should be able to sign in', async () => {
+    const server = app.server
+
     const email = 'johndoe@example.com'
     const password = '123321'
 

@@ -14,9 +14,9 @@ describe('@http/pets/list', async () => {
     await app.close()
   })
 
-  const server = app.server
-
   it('should be able to list da pets', async () => {
+    const server = app.server
+
     const { cookies, token, user } = await createAndAuthenticateUser(
       app,
       'MEMBER',

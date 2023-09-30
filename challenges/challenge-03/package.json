@@ -6,8 +6,7 @@
     "dev": "bun --watch src/index.ts",
     "test": "vitest run --dir src/services",
     "test:watch": "vitest --dir src/services",
-    "test:setup-environment": "cd ./prisma/vitest-environment-prisma && bun link && cd ../../ && bun link vitest-environment-prisma",
-    "pretest:e2e": "bun run test:setup-environment",
+    "pretest:e2e": "cd ./prisma/vitest-environment-prisma && bun link && cd ../../ && bun link vitest-environment-prisma",
     "test:e2e": "vitest run --dir src/http",
     "test:e2e:watch": "vitest --dir src/http"
   },

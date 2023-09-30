@@ -1,0 +1,23 @@
+name: Lint code base
+
+on: ['push']
+
+jobs:
+  lint-code:
+    name: Lint code base
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Lint code
+        run: bun run lint

@@ -14,9 +14,9 @@ describe('@http/pets/filter', async () => {
     await app.close()
   })
 
-  const server = app.server
-
   it('should be able to filter pets', async () => {
+    const server = app.server
+
     const { cookies, token, user } = await createAndAuthenticateUser(
       app,
       'MEMBER',
