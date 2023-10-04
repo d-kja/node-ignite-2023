@@ -9,6 +9,7 @@ export class Student extends Entity<StudentConstructor> {
   get name() {
     return this.props.name
   }
+
   set name(value: string) {
     this.props.name = value
   }
