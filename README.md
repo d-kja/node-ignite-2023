@@ -82,7 +82,7 @@ Install the dependencies and run the project
 
 - Linting: Eslint
 - Testing: Vitest
-- Managing monorepo: [](https://turbo.build/)
+- Managing monorepo: [Turbo](https://turbo.build/)
 - Managing NPM packages: [Changeset](https://github.com/changesets/changesets)
 
 <br />
