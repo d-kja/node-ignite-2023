@@ -1,5 +1,5 @@
 import { AnswerRepository } from '@/domain/forum/application/repositories/answer.repository'
-import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answer.respoitory'
+import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answer.repository'
 import { AnswerQuestionUseCase } from './answer-question.service'
 
 let repository: AnswerRepository

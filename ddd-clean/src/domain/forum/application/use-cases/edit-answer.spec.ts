@@ -1,18 +1,18 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeAnswer } from 'test/factories/make-answer'
 import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answer.repository'
-import { DeleteAnswerUseCase } from './delete-answer.service'
+import { EditAnswerUseCase } from './edit-answer.service'
 
 let repository: InMemoryAnswerRepository
-let sut: DeleteAnswerUseCase
+let sut: EditAnswerUseCase
 
-describe('@use-cases/delete-answer', () => {
+describe('@use-cases/edit-answer', () => {
   beforeEach(() => {
     repository = new InMemoryAnswerRepository()
-    sut = new DeleteAnswerUseCase(repository)
+    sut = new EditAnswerUseCase(repository)
   })
 
-  it('should be able to delete a answer', async () => {
+  it('should be able to edit a answer', async () => {
     const createdAnswer = makeAnswer(
       {
         authorId: new UniqueEntityID('author-id'),
@@ -22,18 +22,28 @@ describe('@use-cases/delete-answer', () => {
 
     await repository.create(createdAnswer)
 
-    await sut.handle({ authorId: 'author-id', answerId: 'example-id' })
+    await sut.handle({
+      authorId: 'author-id',
+      answerId: 'example-id',
+      content: 'content-example',
+    })
 
-    expect(repository.items).toHaveLength(0)
+    expect(repository.items[0]).toMatchObject({
+      content: 'content-example',
+    })
   })
 
-  it('should not be able to delete a answer created by another user', async () => {
+  it('should not be able to edit a answer created by another user', async () => {
     const createdAnswer = makeAnswer({}, new UniqueEntityID('example-id'))
 
     await repository.create(createdAnswer)
 
     await expect(() =>
-      sut.handle({ authorId: 'invalid-id', answerId: 'example-id' }),
+      sut.handle({
+        authorId: 'invalid-id',
+        answerId: 'example-id',
+        content: 'content-example',
+      }),
     ).rejects.toBeInstanceOf(Error)
   })
 })
