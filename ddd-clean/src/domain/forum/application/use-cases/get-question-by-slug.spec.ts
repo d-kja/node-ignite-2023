@@ -20,11 +20,12 @@ describe('@use-cases/get-question-by-slug', () => {
 
     await repository.create(createdQuestion)
 
-    const { question } = await sut.handle({
+    const result = await sut.handle({
       slug: 'some-odd-title',
     })
 
-    expect(question.id).toBeTruthy()
-    expect(question.id).toEqual(createdQuestion.id)
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight())
+      expect(result.value.question.id).toEqual(createdQuestion.id)
   })
 })

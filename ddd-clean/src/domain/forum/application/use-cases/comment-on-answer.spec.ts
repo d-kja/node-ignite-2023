@@ -20,12 +20,15 @@ describe('@use-cases/comment-on-answer', () => {
 
     await answerRepository.create(answer)
 
-    const { answerComment } = await sut.handle({
+    const result = await sut.handle({
       answerId: answer.id.toString(),
       authorId: answer.authorId.toString(),
       content: 'example-content',
     })
 
-    expect(answerComment.content).toEqual('example-content')
+    expect(result.isRight()).toBe(true)
+
+    if (result.isRight())
+      expect(result.value?.answerComment.content).toEqual('example-content')
   })
 })

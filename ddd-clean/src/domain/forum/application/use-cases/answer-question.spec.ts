@@ -12,12 +12,12 @@ describe('@use-cases/answer-question', () => {
   })
 
   it('should be able to answer a question', async () => {
-    const { answer } = await sut.handle({
+    const result = await sut.handle({
       questionId: '0',
       authorId: '0',
       content: 'lorem ipsum...',
     })
 
-    expect(answer.content).toEqual(expect.any(String))
+    expect(result.isRight()).toEqual(true)
   })
 })

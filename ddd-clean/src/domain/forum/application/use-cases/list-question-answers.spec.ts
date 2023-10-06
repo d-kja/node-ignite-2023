@@ -23,12 +23,13 @@ describe('@use-case/list-question-answers', async () => {
       makeAnswer({ questionId: new UniqueEntityID('question-id') }),
     )
 
-    const { answers } = await sut.handle({
+    const result = await sut.handle({
       questionId: 'question-id',
       page: 1,
     })
 
-    expect(answers).toHaveLength(3)
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight()) expect(result.value.answers).toHaveLength(3)
   })
 
   it('should have paginated results', async () => {
@@ -38,11 +39,12 @@ describe('@use-case/list-question-answers', async () => {
       )
     }
 
-    const { answers } = await sut.handle({
+    const result = await sut.handle({
       questionId: 'question-id',
       page: 2,
     })
 
-    expect(answers).toHaveLength(2)
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight()) expect(result.value.answers).toHaveLength(2)
   })
 })

@@ -16,21 +16,23 @@ describe('@use-case/list-recent-questions', async () => {
     await repository.create(makeQuestion({ createdAt: new Date(2022, 0, 20) }))
     await repository.create(makeQuestion({ createdAt: new Date(2022, 0, 22) }))
 
-    const { questions } = await sut.handle({
+    const result = await sut.handle({
       page: 1,
     })
 
-    expect(questions).toEqual([
-      expect.objectContaining({
-        createdAt: new Date(2022, 0, 22),
-      }),
-      expect.objectContaining({
-        createdAt: new Date(2022, 0, 20),
-      }),
-      expect.objectContaining({
-        createdAt: new Date(2022, 0, 18),
-      }),
-    ])
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight())
+      expect(result.value.questions).toEqual([
+        expect.objectContaining({
+          createdAt: new Date(2022, 0, 22),
+        }),
+        expect.objectContaining({
+          createdAt: new Date(2022, 0, 20),
+        }),
+        expect.objectContaining({
+          createdAt: new Date(2022, 0, 18),
+        }),
+      ])
   })
 
   it('should have paginated results', async () => {
@@ -38,10 +40,11 @@ describe('@use-case/list-recent-questions', async () => {
       await repository.create(makeQuestion())
     }
 
-    const { questions } = await sut.handle({
+    const result = await sut.handle({
       page: 2,
     })
 
-    expect(questions).toHaveLength(2)
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight()) expect(result.value.questions).toHaveLength(2)
   })
 })
