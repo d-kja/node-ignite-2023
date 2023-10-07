@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeAnswer } from 'test/factories/make-answer'
+import { InMemoryAnswerAttachmentRepository } from 'test/repositories/in-memory-answer-attachments.repository'
 import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answer.repository'
 import { ListQuestionAnswersUseCase } from './list-question-answers.service'
 
@@ -8,7 +9,9 @@ let sut: ListQuestionAnswersUseCase
 
 describe('@use-case/list-question-answers', async () => {
   beforeEach(() => {
-    repository = new InMemoryAnswerRepository()
+    repository = new InMemoryAnswerRepository(
+      new InMemoryAnswerAttachmentRepository(),
+    )
     sut = new ListQuestionAnswersUseCase(repository)
   })
 

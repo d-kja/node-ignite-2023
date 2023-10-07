@@ -1,4 +1,5 @@
 import { makeQuestion } from 'test/factories/make-question'
+import { InMemoryQuestionAttachmentRepository } from 'test/repositories/in-memory-question-attachments.repository'
 import { InMemoryQuestionRepository } from 'test/repositories/in-memory-question.repository'
 import { ListRecentQuestionsUseCase } from './list-recent-questions.service'
 
@@ -7,7 +8,9 @@ let sut: ListRecentQuestionsUseCase
 
 describe('@use-case/list-recent-questions', async () => {
   beforeEach(() => {
-    repository = new InMemoryQuestionRepository()
+    repository = new InMemoryQuestionRepository(
+      new InMemoryQuestionAttachmentRepository(),
+    )
     sut = new ListRecentQuestionsUseCase(repository)
   })
 

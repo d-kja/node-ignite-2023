@@ -1,9 +1,14 @@
 import { PaginatedRequest } from '@/core/repositories/paginated-request'
+import { QuestionAttachmentsRepository } from '@/domain/forum/application/repositories/question-attachments.repository'
 import { QuestionRepository } from '@/domain/forum/application/repositories/question.repository'
 import { Question } from '@/domain/forum/enterprise/entities/question.entity'
 
 export class InMemoryQuestionRepository implements QuestionRepository {
   public items: Question[] = []
+
+  constructor(
+    private questionAttachmentsRepository: QuestionAttachmentsRepository,
+  ) {}
 
   async create(question: Question): Promise<void> {
     this.items.push(question)
@@ -23,6 +28,10 @@ export class InMemoryQuestionRepository implements QuestionRepository {
     )
 
     this.items.splice(questionIndex, 1)
+
+    this.questionAttachmentsRepository.deleteManyByQuestionId(
+      question.id.toString(),
+    )
   }
 
   async findById(id: string): Promise<Question | null> {
