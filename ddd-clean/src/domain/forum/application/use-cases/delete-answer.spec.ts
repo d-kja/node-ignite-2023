@@ -1,10 +1,10 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/core/error/errors/not-allowed-error'
 import { makeAnswer } from 'test/factories/make-answer'
 import { makeAnswerAttachment } from 'test/factories/make-answer-attachment'
 import { InMemoryAnswerAttachmentRepository } from 'test/repositories/in-memory-answer-attachments.repository'
 import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answer.repository'
 import { DeleteAnswerUseCase } from './delete-answer.service'
-import { NotAllowedError } from './errors/not-allowed-error'
 
 let attachmentRepository: InMemoryAnswerAttachmentRepository
 let repository: InMemoryAnswerRepository

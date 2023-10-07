@@ -1,9 +1,9 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/core/error/errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/error/errors/resource-not-found-error'
 import { makeAnswerComment } from 'test/factories/make-answer-comment'
 import { InMemoryAnswerCommentRepository } from 'test/repositories/in-memory-answer-comment.repository'
 import { DeleteCommentAnswerUseCase } from './delete-answer-comment.service'
-import { NotAllowedError } from './errors/not-allowed-error'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let repository: InMemoryAnswerCommentRepository
 let sut: DeleteCommentAnswerUseCase

@@ -1,10 +1,10 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/core/error/errors/not-allowed-error'
 import { makeQuestion } from 'test/factories/make-question'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 import { InMemoryQuestionAttachmentRepository } from 'test/repositories/in-memory-question-attachments.repository'
 import { InMemoryQuestionRepository } from 'test/repositories/in-memory-question.repository'
 import { EditQuestionUseCase } from './edit-question.service'
-import { NotAllowedError } from './errors/not-allowed-error'
 
 let questionRepository: InMemoryQuestionRepository
 let questionAttachmentRepository: InMemoryQuestionAttachmentRepository
