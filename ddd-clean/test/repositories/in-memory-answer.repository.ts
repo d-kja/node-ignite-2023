@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { PaginatedRequest } from '@/core/repositories/paginated-request'
 import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments.repository'
 import { AnswerRepository } from '@/domain/forum/application/repositories/answer.repository'
@@ -12,6 +13,8 @@ export class InMemoryAnswerRepository implements AnswerRepository {
 
   async create(answer: Answer): Promise<void> {
     this.items.push(answer)
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async save(answer: Answer): Promise<void> {
@@ -20,6 +23,8 @@ export class InMemoryAnswerRepository implements AnswerRepository {
     )
 
     this.items[answerIndex] = answer
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async delete(answer: Answer): Promise<void> {

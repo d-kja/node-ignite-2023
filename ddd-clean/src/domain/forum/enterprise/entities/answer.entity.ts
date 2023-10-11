@@ -1,6 +1,7 @@
-import { Entity } from '@/core/entities/entity'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
+import { AnswerCreatedEvent } from '../events/answer-created.event'
 import { AnswerAttachmentList } from './answer-attachment-list.entity'
 
 export interface AnswerConstructor {
@@ -12,7 +13,7 @@ export interface AnswerConstructor {
   attachments: AnswerAttachmentList
 }
 
-export class Answer extends Entity<AnswerConstructor> {
+export class Answer extends AggregateRoot<AnswerConstructor> {
   get questionId() {
     return this.props.questionId
   }
@@ -67,6 +68,11 @@ export class Answer extends Entity<AnswerConstructor> {
       },
       id,
     )
+
+    const hasAnswerBeenCreatedBefore = !id
+
+    if (hasAnswerBeenCreatedBefore)
+      answer.addDomainEvent(new AnswerCreatedEvent(answer))
 
     return answer
   }
